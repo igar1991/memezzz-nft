@@ -11,3 +11,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.carousel {
+  height: 250px;
+}
+
+.carousel-item {
+  height: 250px;
+}
+
+.dzu-previewContainer {
+  flex-direction: column-reverse !important;
+}
+
