@@ -16,8 +16,8 @@ export const Feedmeme = ({ arrNft, status }) => {
         <div className="d-flex flex-wrap justify-content-center">
             {status === 'complit' ? arrNft?.map((item, index) => {
                 return (
-                    <button key={index} className="bg-dark card m-2 shadow p-0" style={{ width: "10rem" }} onClick={() => chooseM(item)}>
-                        <img src={item.image} style={{ height: "9rem", objectFit: "cover" }} className="card-img-top" alt="meme" />
+                    <button key={index} className="bg-dark card m-2 shadow p-0" style={{ width: "12rem" }} onClick={() => chooseM(item)}>
+                        <img src={item.image} style={{ height: "10rem", objectFit: "cover" }} className="card-img-top" alt="meme" />
                         <div className="card-body text-center">
                             <p className="card-text fw-bold text-white">{item.title}</p>
                         </div>
