@@ -77,7 +77,7 @@ export const GenerateMeme = ({ stageRef }) => {
     return (
         <div className="d-flex col-12 justify-content-center flex-wrap">
             <div className="col-11 col-sm-5">
-                {!currentMeme && <div className="d-flex text-white justify-content-center text-center align-items-center" style={{ width: "95%", height: 400, border: '0.4rem dashed' }}><h2>Upload image or choose a template!</h2></div>}
+                {!currentMeme && <div className="d-flex mb-2 text-white justify-content-center text-center align-items-center" style={{ width: "95%", height: 400, border: '0.4rem dashed' }}><h2>Upload image or choose a template!</h2></div>}
                 {currentMeme && <Stage width={widthCanvas} height={heightCanvas} ref={stageRef}>
                     <Layer>
                         <MemeImage src={imgsrc} w={widthCanvas} h={heightCanvas} />

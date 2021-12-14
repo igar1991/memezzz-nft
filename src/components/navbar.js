@@ -32,6 +32,12 @@ export const Navbar = () => {
                         <li className="nav-item">
                             <Link className="nav-link" to="/about">About Swarm</Link>
                         </li>
+                        <li className="nav-item">
+                            <a className="nav-link" target="_blank"
+                                rel='noreferrer'
+                                href="https://blockscout.com/xdai/mainnet/token/0xc5caC9F4610fb874F54aF5B12c19Cc5fECF75469">BlockScout</a>
+                        </li>
+
                     </ul>
                     <div className="d-flex">
                         {userAdress ?

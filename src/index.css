@@ -24,3 +24,7 @@ code {
   flex-direction: column-reverse !important;
 }
 
+.btn-close {
+  background-color: white;
+}
+

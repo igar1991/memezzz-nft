@@ -56,6 +56,8 @@ export const nftSlice = createSlice({
         modalNft: false,
         metaUrl: null,
         status: "start",
+        statusUpload: "start",
+        statusUser: "start",
         error: null,
         userMemes: null
     },
@@ -69,12 +71,14 @@ export const nftSlice = createSlice({
     },
     extraReducers: {
         [uploadNft.pending]: (state) => {
+            state.statusUpload="pending"
         },
         [uploadNft.fulfilled]: (state, action) => {
             state.metaUrl = action.payload
+            state.statusUpload="start"
         },
         [uploadNft.rejected]: (state, action) => {
-            state.status = "error"
+            state.statusUpload = "error"
             state.error = action.payload
         },
         [createNft.pending]: (state) => {
@@ -89,15 +93,15 @@ export const nftSlice = createSlice({
             state.error = action.payload
         },
         [getUserMemes.pending]: (state) => {
-            state.status='pending'
+            state.statusUser='pending'
         },
         [getUserMemes.fulfilled]: (state, action) => {
             const newarr = action.payload.map((el)=>el.meta)
             state.userMemes = newarr
-            state.status="complit"
+            state.statusUser="complit"
         },
         [getUserMemes.rejected]: (state, action) => {
-            state.status = "error"
+            state.statusUser = "error"
             state.error = action.payload
         }
     }

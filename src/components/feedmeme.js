@@ -42,7 +42,7 @@ export const Feedmeme = ({ arrNft, status }) => {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body className='bg-dark text-white text-center d-flex flex-column justify-content-center'>
-                    <img className="ms-auto me-auto" src={meme.image} style={{ height: "50vh", objectFit: "contain" }} alt="meme" />
+                    <img className="ms-auto me-auto" src={meme.image} style={{ height: "50vh", objectFit: "contain", maxWidth: '100%' }} alt="meme" />
                     <h4>{meme.description}</h4>
                 </Modal.Body>
             </Modal>

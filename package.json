@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@ethersphere/bee-js": "^3.1.0",
+    "@primer/react": "^34.0.0",
     "@reduxjs/toolkit": "^1.5.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
