@@ -14,7 +14,7 @@ export const Feedmeme = ({ arrNft, status }) => {
 
     return (
         <div className="d-flex flex-wrap justify-content-center">
-            {status === 'complit' ? arrNft?.map((item, index) => {
+            {status === 'complit' && arrNft?.map((item, index) => {
                 return (
                     <button key={index} className="bg-dark card m-2 shadow p-0" style={{ width: "12rem" }} onClick={() => chooseM(item)}>
                         <img src={item.image} style={{ height: "10rem", objectFit: "cover" }} className="card-img-top" alt="meme" />
@@ -23,11 +23,12 @@ export const Feedmeme = ({ arrNft, status }) => {
                         </div>
                     </button>
                 )
-            }) : <div className="d-flex justify-content-center text-warning mt-5">
-                <div className="spinner-border" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                </div>
-            </div>}
+            }) }
+            {status === 'pending' && <div className="d-flex justify-content-center text-warning mt-5">
+            <div className="spinner-border" role="status">
+                <span className="visually-hidden">Loading...</span>
+            </div>
+        </div>}
             {status === 'error' && <h2 className='text-warning mt-4'>Error! Try later...</h2>}
             <Modal
                 size="md"
