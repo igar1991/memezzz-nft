@@ -83,6 +83,10 @@ export const Create = () => {
                     <div className="col-11 mb-3">
                         <textarea maxlength={255} value={dec} onChange={(e) => setDec(e.target.value)} className="form-control" id="exampleFormControlTextarea1" placeholder="Description your NFT" rows="3"></textarea>
                     </div>
+                    {!metaInstalled&&<div className="alert alert-danger mt-2" role="alert">
+                            <AlertFillIcon verticalAlign="middle" size={12} /> For uploading, please, install <a rel='noreferrer'
+                                href="https://metamask.io/" className="alert-link">MetaMask.</a>
+                        </div>}
                     <div class="d-grid col-12 col-md-4 gap-2">
                         <button className="btn btn-success" onClick={upload} disabled={statusUpload === "pending"}>{statusUpload === "pending" ? 'Uploading...' : <><UploadIcon verticalAlign="middle" className="fw-bold" size={24} />Upload</>}</button>
                     </div>
