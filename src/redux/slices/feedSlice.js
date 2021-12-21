@@ -31,7 +31,8 @@ export const getFeed = createAsyncThunk('feed/getFeed',
         try {
 
             for (let i = 0; i < arr.length; i++) {
-                const response = await fetch(arr[i].metaUri)
+                const gitNum = Math.floor(Math.random() * (9 - 0 + 1)) + 0
+                const response = await fetch(arr[i].metaUri.replace('bee-0', `bee-${gitNum}`))
                 if (!response.ok) {
                     console.log("Server error")
                 } else {
