@@ -15,9 +15,14 @@ export const Feedmeme = ({ arrNft, status }) => {
     return (
         <div className="d-flex flex-wrap justify-content-center">
             {status === 'complit' && arrNft?.map((item, index) => {
+
+                const gitNum = Math.floor(Math.random() * (9 - 0 + 1)) + 0
+               
+                const newSRC = item.image.replace('bee-0', `bee-${gitNum}`)
+                console.log(newSRC)
                 return (
                     <button key={index} className="bg-dark card m-2 shadow p-0" style={{ width: "12rem" }} onClick={() => chooseM(item)}>
-                        <img src={item.image} style={{ height: "10rem", objectFit: "cover" }} className="card-img-top" alt="meme" />
+                        <img src={newSRC} style={{ height: "10rem", objectFit: "cover" }} className="card-img-top" alt="meme" />
                         <div className="card-body text-center">
                             <p className="card-text fw-bold text-white">{item.title}</p>
                         </div>
