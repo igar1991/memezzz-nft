@@ -17,7 +17,7 @@ export const Create = () => {
 
     const [title, setTitle] = useState('')
     const [dec, setDec] = useState('')
-    const { currentMeme } = useSelector(state => state.main)
+    const { currentMeme, textOptions, widthCanvas, heightCanvas  } = useSelector(state => state.main)
     const { metaUrl, status, modalNft, statusUpload } = useSelector(state => state.nft)
     const { userAdress, metaInstalled, networkId } = useSelector(state => state.meta)
 
@@ -37,13 +37,37 @@ export const Create = () => {
     },[status,dispatch])
 
     const upload = () => {
-        fetch(stageRef.current.toDataURL())
+        let img = document.createElement("img");
+        img.src = currentMeme.url
+        img.crossOrigin = "anonymous"
+        img.onload = function () {
+
+            const indy = currentMeme.height / heightCanvas
+            let canvas = document.createElement("canvas")
+            canvas.setAttribute("id", "canvas");
+            const ctx = canvas.getContext("2d")
+            canvas.width = currentMeme.width
+            canvas.height = currentMeme.height
+            img.setAttribute("width", currentMeme.width);
+            img.setAttribute("height", currentMeme.height);
+            ctx.drawImage(img, 0, 0, currentMeme.width, currentMeme.height);
+            for (let i = 0; i < textOptions.length; i++) {
+                const x = (textOptions[i].x * 100 / widthCanvas) * currentMeme.width / 100
+                const y = (textOptions[i].y * 100 / heightCanvas) * currentMeme.height / 100 + textOptions[i].fontsize * indy
+                ctx.font = `${textOptions[i].fontsize * indy}px Impact`
+                ctx.fillStyle = textOptions[i].fontcolor
+                ctx.fillText(textOptions[i].text, x.toFixed(2), y.toFixed(2))
+            }
+            fetch(canvas.toDataURL())
             .then(res => res.blob())
             .then(res => {
                 let file = new File([res], 'image.jpg')
                 return file
             })
             .then(res => dispatch(uploadNft({ image: res, title: title, dec: dec })))
+        };
+
+        
 
     }
 
@@ -78,16 +102,16 @@ export const Create = () => {
                 {!metaUrl && <GenerateMeme stageRef={stageRef} />}
                 {currentMeme && !metaUrl && <div className="d-flex flex-column justify-content-end align-content-end align-items-center pt-3">
                     <div className="col-11 mb-3">
-                        <input maxlength={120} value={title} onChange={(e) => setTitle(e.target.value)} type="text" className="form-control" id="exampleFormControlInput1" placeholder="Title your NFT" />
+                        <input maxLength={120} value={title} onChange={(e) => setTitle(e.target.value)} type="text" className="form-control" id="exampleFormControlInput1" placeholder="Title your NFT" />
                     </div>
                     <div className="col-11 mb-3">
-                        <textarea maxlength={255} value={dec} onChange={(e) => setDec(e.target.value)} className="form-control" id="exampleFormControlTextarea1" placeholder="Description your NFT" rows="3"></textarea>
+                        <textarea maxLength={255} value={dec} onChange={(e) => setDec(e.target.value)} className="form-control" id="exampleFormControlTextarea1" placeholder="Description your NFT" rows="3"></textarea>
                     </div>
                     {!metaInstalled&&<div className="alert alert-danger mt-2" role="alert">
                             <AlertFillIcon verticalAlign="middle" size={12} /> For uploading, please, install <a rel='noreferrer'
                                 href="https://metamask.io/" className="alert-link">MetaMask.</a>
                         </div>}
-                    <div class="d-grid col-12 col-md-4 gap-2">
+                    <div className="d-grid col-12 col-md-4 gap-2">
                         <button className="btn btn-success" onClick={upload} disabled={statusUpload === "pending"}>{statusUpload === "pending" ? 'Uploading...' : <><UploadIcon verticalAlign="middle" className="fw-bold" size={24} />Upload</>}</button>
                     </div>
                 </div>}
@@ -126,8 +150,8 @@ export const Create = () => {
                         {status === 'created' && <h3>Congratulations! You created NFT.</h3>}
                         {status === 'pending' &&
                             <><h3 className='text-warning'>Creation...</h3>
-                                <div class="spinner-border text-warning" role="status">
-                                    <span class="visually-hidden">Loading...</span>
+                                <div className="spinner-border text-warning" role="status">
+                                    <span className="visually-hidden">Loading...</span>
                                 </div></>}
                     </Modal.Body>
                     {status === 'created' && <Modal.Footer className='bg-dark'>

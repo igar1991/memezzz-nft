@@ -25,15 +25,31 @@ export const mainSlice = createSlice({
         status: "start",
         error: null,
         currentMeme: null,
-        widthMeme: null,
-        heightMeme: null
+        widthCanvas: null,
+        heightCanvas: null,
+        textOptions: [{
+            id: 0,
+            isDragging: false,
+            x: 50,
+            y: 50,
+            fontsize: 40,
+            text: '',
+            fontcolor: '#000000'
+        }]
     },
     reducers: {
       chooseMeme: (state, action)=>{
-        state.currentMeme =action.payload.src
-        state.widthMeme = action.payload.w
-        state.heightMeme =action.payload.h
-      }
+        state.currentMeme =action.payload
+      },
+      postWidth: (state, action)=>{
+          state.widthCanvas=action.payload
+      },
+      postHeight: (state, action)=>{
+        state.heightCanvas=action.payload
+    },
+     changeText: (state, action)=>{
+         state.textOptions = action.payload
+     }
     },
     extraReducers: {
         [getTemplateArr.pending]: (state) => {
@@ -53,6 +69,6 @@ export const mainSlice = createSlice({
     }
 })
 
-export const {chooseMeme} = mainSlice.actions
+export const {chooseMeme, postWidth, postHeight, changeText } = mainSlice.actions
 
 export default mainSlice.reducer
