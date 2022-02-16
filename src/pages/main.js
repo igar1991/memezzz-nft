@@ -1,5 +1,6 @@
 import React from 'react';
 import { Navbar } from '../components/navbar';
+import { Link } from 'react-router-dom';
 import hive from '../file/hive.svg'
 import img_1 from '../file/1.svg'
 import img_2 from '../file/2.svg'
@@ -27,8 +28,10 @@ export const Main = () => {
                 <div>
                     <h1 className='text-white'>Create, sell and enjoy NFT memes</h1>
                     <h5 className='text-secondary mb-3'>MemeZzz is the world's first NFT memes marketplace in the telegram channel</h5>
-                    <button className='btn btn-outline-warning'>Marketplace</button>
-                    <button className='btn btn-success ms-2'>Create NFT</button>
+                    <div className='d-flex'>
+                        <div className="nav-link" to="/create"><button className='btn btn-outline-warning'>Marketplace</button></div>
+                        <Link className="nav-link" to="/create"><button className='btn btn-success ms-2'>Create NFT</button></Link>
+                    </div>
                 </div>
             </div>
             <div className='col-md-4 col-8 p-3'>
@@ -87,7 +90,7 @@ export const Main = () => {
             </div>
             <div className='col-6 col-md-2'>
                 <img src={img_12} alt="hive" style={{ width: "60%" }} />
-                <p className='text-light fs-5'>David</p>
+                <p className='text-light fs-5'>Roman</p>
             </div>
         </div>
         <hr className="bg-warning" />
