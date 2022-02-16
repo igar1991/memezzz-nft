@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { modalisMeta } from '../redux/slices/metaSlice';
 import { getNetwork } from '../redux/slices/metaSlice';
 import { getAdress } from '../redux/slices/metaSlice';
+import logo from '../file/logo.svg'
 
 
 
@@ -19,7 +20,7 @@ export const Navbar = () => {
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow">
             <div className="container-fluid">
                 <Link className="navbar-brand text-warning fs-3" to="/" style={{ fontFamily: "Impact" }}>
-                    MemeZzz
+                    <img src={logo} alt="logo" style={{width: 80 }} />
                 </Link>
                 <button className="navbar-toggler" onClick={() => setBurger(!burger)}>
                     <span className="navbar-toggler-icon"></span>
@@ -32,12 +33,6 @@ export const Navbar = () => {
                         <li className="nav-item">
                             <Link className="nav-link" to="/about">About Swarm</Link>
                         </li>
-                        <li className="nav-item">
-                            <a className="nav-link" target="_blank"
-                                rel='noreferrer'
-                                href="https://blockscout.com/xdai/mainnet/token/0xc5caC9F4610fb874F54aF5B12c19Cc5fECF75469">BlockScout</a>
-                        </li>
-
                     </ul>
                     <div className="d-flex">
                         {userAdress ?

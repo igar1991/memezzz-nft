@@ -93,7 +93,7 @@ export const GenerateMeme = ({ stageRef }) => {
                 {textOptions.map((el, index) => <div key={index}>
                     <input
                         disabled={!currentMeme}
-                        className="form-control form-control-lg m-2"
+                        className="form-control m-2"
                         type="text"
                         name="topText"
                         placeholder="Text"
