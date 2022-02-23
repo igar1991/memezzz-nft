@@ -16,6 +16,23 @@ export const Navbar = () => {
 
     const { modalMeta, metaInstalled, userAdress, networkId } = useSelector(state => state.meta)
 
+    const wavesAuth =()=>{
+        const authData = { data: "Auth on my site" }
+        if (window.WavesKeeper) {
+            window.WavesKeeper.auth(authData)
+            .then(auth => {
+                console.log( auth ); //displaying the result on the console
+                /*...processing data */
+            }).catch(error => {
+                console.error( error ); // displaying the result on the console
+                /*...processing errors */
+            })
+        } else {
+            alert("To Auth WavesKeeper should be installed.");
+        }
+    }
+
+
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow">
             <div className="container-fluid">
@@ -26,6 +43,7 @@ export const Navbar = () => {
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className={`${!burger ? 'collapse' : ''} navbar-collapse`}>
+                    <button onClick={wavesAuth}>CLOOOOOOOOOOO</button>
                     <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li className="nav-item">
                             <Link className="nav-link" to="/create">Create NFT</Link>

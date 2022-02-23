@@ -2,6 +2,7 @@
   "name": "memezzz-nft",
   "version": "0.1.0",
   "private": true,
+  "plugins": [["@babel/plugin-proposal-class-properties", { "loose": true }]],
   "dependencies": {
     "@ethersphere/bee-js": "^3.1.0",
     "@primer/react": "^34.0.0",
@@ -9,9 +10,11 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "@waves/waves-transactions": "^4.2.5-beta.3",
     "bootstrap": "5.1.3",
     "ethers": "^5.5.2",
     "konva": "^8.3.0",
+    "node-fetch": "^3.2.0",
     "react": "^17.0.2",
     "react-bootstrap": "^2.0.3",
     "react-dom": "^17.0.2",
@@ -45,5 +48,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.16.7",
+    "@babel/plugin-syntax-class-properties": "^7.12.13"
   }
 }

@@ -17,9 +17,11 @@ import img_12 from '../file/12.svg'
 import twit from '../file/twitter.svg'
 import tele from '../file/telegram.svg'
 
-
+//import WavesNFT from '../redux/WavesNFT'
 
 export const Main = () => {
+
+    //console.log(WavesNFT)
 
     return <div className="bg-dark">
         <Navbar />
