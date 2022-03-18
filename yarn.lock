@@ -2649,6 +2649,13 @@
   resolved "https://registry.npmjs.org/@types/q/-/q-1.5.4.tgz"
   integrity sha512-1HcDas8SEj4z1Wc696tH56G8OlRaH/sqZOynNNB+HF0WOeXPaxTtbYzJY2oEfiUxjSKjhCKr+MvR7dCHcEelug==
 
+"@types/ramda@^0.27.32":
+  version "0.27.66"
+  resolved "https://registry.yarnpkg.com/@types/ramda/-/ramda-0.27.66.tgz#f1a23d13b0087d806a62e3ff941e5e59b3318999"
+  integrity sha512-i2YW+E2U6NfMt3dp0RxNcejox+bxJUNDjB7BpYuRuoHIzv5juPHkJkNgcUOu+YSQEmaWu8cnAo/8r63C0NnuVA==
+  dependencies:
+    ts-toolbelt "^6.15.1"
+
 "@types/react-dom@*":
   version "17.0.11"
   resolved "https://registry.npmjs.org/@types/react-dom/-/react-dom-17.0.11.tgz"
@@ -2941,6 +2948,11 @@
   dependencies:
     bignumber.js "^9.0.1"
 
+"@waves/client-logs@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@waves/client-logs/-/client-logs-1.0.0.tgz#52d021a330eab674475c50d42e616d3877e1a537"
+  integrity sha512-Uf8NKJGw4lgmPTEFtqIuDD6GZkk73MZLyaFI1VWDDElXhsFY2uxdWhxFQYqK/8GNZBSycCTvDsi0RNDEqE1ivw==
+
 "@waves/marshall@^0.14.0":
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/@waves/marshall/-/marshall-0.14.0.tgz#9b294be9d0df70a098d564424c6f998e0bcf74c8"
@@ -2952,7 +2964,7 @@
     base64-js "^1.3.0"
     long "^4.0.0"
 
-"@waves/node-api-js@^1.2.3":
+"@waves/node-api-js@^1.2.3", "@waves/node-api-js@^1.2.4":
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/@waves/node-api-js/-/node-api-js-1.2.4.tgz#6e992f3595bf8e7f31b195ebd2ff66068d1af9b9"
   integrity sha512-Bn82D4056BbUQmUoNg8VMXWj97vGAkqOKgjGGxcAspVXI02CoYkIK+7UHvKCTltvzSpomEpeZ0xephCnetJOzw==
@@ -2976,7 +2988,30 @@
     "@types/long" "^4.0.0"
     protobufjs "^6.8.8"
 
-"@waves/ts-lib-crypto@1.4.3":
+"@waves/provider-keeper@^0.2.4":
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/@waves/provider-keeper/-/provider-keeper-0.2.4.tgz#32e720ab2e504755732f3ab6892aed672e2db003"
+  integrity sha512-GjKxNq1ajuK+J4q2g2vy9kGgKj+oyGO+Oe6zTv9Q26BsJkZc/D7k2HqRRflyaAqdtsqq58jfO095IHJQVDAIzA==
+  dependencies:
+    "@waves/marshall" "^0.14.0"
+    "@waves/ts-types" "^1.0.0"
+    "@waves/waveskeeper-types" "^0.2.1"
+    tslib "^2.1.0"
+    typed-ts-events "^1.2.1"
+
+"@waves/signer@^1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@waves/signer/-/signer-1.0.7.tgz#7c15ba7ed732f689dd08e53306c16e9f3f4cfaff"
+  integrity sha512-Y9PWqM504uwCK5uK5b53v7cZmrVLUAFwFZ+DqoKoBSV17GlJhyFlepipDlXua4JBA98Bnz32DNBQbKGPLqaorg==
+  dependencies:
+    "@types/ramda" "^0.27.32"
+    "@waves/client-logs" "^1.0.0"
+    "@waves/node-api-js" "^1.2.4"
+    "@waves/ts-lib-crypto" "^1.4.3"
+    "@waves/ts-types" "^1.0.0"
+    ramda "^0.27.1"
+
+"@waves/ts-lib-crypto@1.4.3", "@waves/ts-lib-crypto@^1.4.3":
   version "1.4.3"
   resolved "https://registry.yarnpkg.com/@waves/ts-lib-crypto/-/ts-lib-crypto-1.4.3.tgz#8948fddc35d4e90b2184f9773eeb63907a6a6edd"
   integrity sha512-2pKgyvtLapgM5vpaUEYzX7NYe2bkB+HdWn9W/4d7UFKwyg6zoOYhRQWyb6GuLi3OLHTETgiqpcMZvciFA0Ds6g==
@@ -2989,7 +3024,7 @@
   resolved "https://registry.yarnpkg.com/@waves/ts-types/-/ts-types-1.0.6-beta.4.tgz#3cc7a3530a071b4102c3d5f91577bac85faefbc1"
   integrity sha512-TyFzgYiWkJ5PF7F3XxAE1dudti5a9MVh2BgtGhYKIrSanXNPXhT9KYYRkQRIemYP+HQ4y89rEBf/CUszTdnaag==
 
-"@waves/ts-types@^1.0.5":
+"@waves/ts-types@^1.0.0", "@waves/ts-types@^1.0.5":
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/@waves/ts-types/-/ts-types-1.0.7.tgz#112108b4abcddee022d2319207a06b7987004ae9"
   integrity sha512-fbUCGIM5BIaZCCje3Nm135r0n9zDJIJicHSa5OJxO+NEU46aEtmfUoAL9fBbWAgQmTmtR57E5Wi4s+fUjqY7DA==
@@ -3006,6 +3041,11 @@
     "@waves/ts-types" "1.0.6-beta.4"
     axios "^0.19.0"
     long "^4.0.0"
+
+"@waves/waveskeeper-types@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@waves/waveskeeper-types/-/waveskeeper-types-0.2.1.tgz#95edf5e80387cd246d4ba4fd4dd259e59b49b1d7"
+  integrity sha512-Bgys3MtKoEFJfQVURFGQP4ox80Vp4RkcPxHXG7xxZMlj6WhC0y6Q6dAaf/2/SMx251e1kYveSc1ZqE9LaDMxCA==
 
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"
@@ -10300,6 +10340,11 @@ raf@^3.4.1:
   dependencies:
     performance-now "^2.1.0"
 
+ramda@^0.27.1:
+  version "0.27.2"
+  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.27.2.tgz#84463226f7f36dc33592f6f4ed6374c48306c3f1"
+  integrity sha512-SbiLPU40JuJniHexQSAgad32hfwd+DRUdwF2PlVuI5RZD0/vahUco7R8vD86J/tcEKKF9vZrUVwgtmGCqlCKyA==
+
 randombytes@^2.0.0, randombytes@^2.0.1, randombytes@^2.0.5, randombytes@^2.1.0:
   version "2.1.0"
   resolved "https://registry.npmjs.org/randombytes/-/randombytes-2.1.0.tgz"
@@ -12113,6 +12158,11 @@ ts-pnp@1.2.0, ts-pnp@^1.1.6:
   resolved "https://registry.npmjs.org/ts-pnp/-/ts-pnp-1.2.0.tgz"
   integrity sha512-csd+vJOb/gkzvcCHgTGSChYpy5f1/XKNsmvBGO4JXS+z1v2HobugDz4s1IeFXM3wZB44uczs+eazB5Q/ccdhQw==
 
+ts-toolbelt@^6.15.1:
+  version "6.15.5"
+  resolved "https://registry.yarnpkg.com/ts-toolbelt/-/ts-toolbelt-6.15.5.tgz#cb3b43ed725cb63644782c64fbcad7d8f28c0a83"
+  integrity sha512-FZIXf1ksVyLcfr7M317jbB67XFJhOO1YqdTcuGaq9q5jLUoTikukZ+98TPjKiP2jC5CgmYdWWYs0s2nLSU0/1A==
+
 tsconfig-paths@^3.9.0:
   version "3.9.0"
   resolved "https://registry.npmjs.org/tsconfig-paths/-/tsconfig-paths-3.9.0.tgz"
@@ -12132,6 +12182,11 @@ tslib@^2.0.3:
   version "2.1.0"
   resolved "https://registry.npmjs.org/tslib/-/tslib-2.1.0.tgz"
   integrity sha512-hcVC3wYEziELGGmEEXue7D75zbwIIVUMWAVbHItGPx0ziyXxrOMQx4rQEVEV45Ut/1IotuEvwqPopzIOkDMf0A==
+
+tslib@^2.1.0:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.3.1.tgz#e8a335add5ceae51aa261d32a490158ef042ef01"
+  integrity sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==
 
 tsutils@^3.17.1:
   version "3.20.0"
@@ -12214,7 +12269,7 @@ type@^2.0.0:
   resolved "https://registry.npmjs.org/type/-/type-2.3.0.tgz"
   integrity sha512-rgPIqOdfK/4J9FhiVrZ3cveAjRRo5rsQBAIhnylX874y1DX/kEKSVdLsnuHB6l1KTjHyU01VjiMBHgU2adejyg==
 
-typed-ts-events@^1.1.1:
+typed-ts-events@^1.1.1, typed-ts-events@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/typed-ts-events/-/typed-ts-events-1.2.1.tgz#46faea14f937cbe3d0c5158d8ef4cc60497fdbbe"
   integrity sha512-+Fy9cqWA/Kv1QX0k6m5ZflGcG2jQSZQGr+jLGXYUM22yihhkHs243LEXvY4cs54lAVyj5gokm0TbgkmL4qDsTg==

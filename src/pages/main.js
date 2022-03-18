@@ -17,12 +17,8 @@ import img_12 from '../file/12.svg'
 import twit from '../file/twitter.svg'
 import tele from '../file/telegram.svg'
 
-//import WavesNFT from '../redux/WavesNFT'
-
 export const Main = () => {
-
-    //console.log(WavesNFT)
-
+    console.log(typeof window.ethereum)
     return <div className="bg-dark">
         <Navbar />
         <div className='d-flex justify-content-center flex-wrap mb-lg-5'>

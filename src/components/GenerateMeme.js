@@ -15,7 +15,7 @@ export const GenerateMeme = ({ stageRef }) => {
 
     useEffect(() => {
         if (window.innerWidth > 400) {
-            dispatch(postWidth(300))
+            dispatch(postWidth(500))
         } else {
             dispatch(postWidth(window.innerWidth - 100))
         }
@@ -56,9 +56,9 @@ export const GenerateMeme = ({ stageRef }) => {
 
     return (
         <div className="d-flex col-12 justify-content-center flex-wrap">
-            <div className="col-11 col-sm-5">
+            <div className="col-11 col-sm-6">
                 {!currentMeme && <div className="d-flex mb-2 text-white justify-content-center text-center align-items-center" style={{ width: "95%", height: 400, border: '0.4rem dashed' }}><h2>Upload image or choose a template!</h2></div>}
-                {currentMeme && <Stage width={widthCanvas} height={heightCanvas} ref={stageRef}>
+                {currentMeme && <Stage className="ms-auto me-auto d-flex justify-content-center" width={widthCanvas} height={heightCanvas} ref={stageRef}>
                     <Layer>
                         <MemeImage src={currentMeme.url} w={widthCanvas} h={heightCanvas} />
                         {textOptions.map((el, index) => <Text
@@ -77,14 +77,12 @@ export const GenerateMeme = ({ stageRef }) => {
                                 dispatch(changeText(textOptions.map((item) => item.id === el.id ? { ...item, isDragging: false, x: e.target.x(), y: e.target.y() } : item)));
                             }}
                         />)}
-
-
                     </Layer>
                 </Stage>}
             </div>
-            <div className="col-11 col-sm-6">
+            <div className="col-11 col-sm-4">
                 <div>
-                    <label className="btn btn-primary">
+                    <label className="btn btn-primary mb-1">
                         <input className="d-none" type="file" onChange={(e) => _onChange(e.target.files[0])} />
                         Upload image from device
                     </label>

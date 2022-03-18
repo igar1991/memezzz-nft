@@ -1,35 +1,80 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Feedmeme } from '../components/feedmeme';
 import { Navbar } from '../components/navbar';
-import { getUserMemes } from '../redux/slices/nftSlice';
+import { getUserNftWaves } from '../redux/slices/loginSlice';
 import { AlertFillIcon } from '@primer/octicons-react'
+import { MemeTemplate } from '../components/memeTemplate';
+import { changeNftWaves, pickupNftWaves } from '../redux/slices/nftSlice';
+import { Modal, ButtonGroup, ToggleButton, Form } from "react-bootstrap";
 
 export const Profile = () => {
 
     const dispatch = useDispatch()
-
-    const {userAdress, networkId} = useSelector((state)=>state.meta)
-    const {userMemes, statusUser} = useSelector((state)=>state.nft)
+    const {userAdress, userNft} = useSelector((state)=>state.login)
+    const [radioValue, setRadioValue] = useState('1');
+    const [currentPrice, setCurrentPrice] = useState('');
 
     useEffect(()=>{
-        if(userMemes===null) {
-            dispatch(getUserMemes(userAdress))
+        if(userNft===null) {
+            dispatch(getUserNftWaves(userAdress))
         }
-    },[dispatch, userAdress, userMemes ])
+    },[dispatch, userAdress, userNft ])
+
+
+    const changeInfo =(id, id_asset, isTradable, price)=>{
+        const trade = isTradable==='1'?true: false
+        dispatch(changeNftWaves({ id, id_asset, isTradable: trade, price: +price}))
+    }
 
     return <div style={{ backgroundColor: "black", minHeight: "100vh" }} >
         <Navbar />
         <div className="bg-dark text-warning m-2 p-3" style={{ minHeight: "90vh" }}>
             <h1>Your NFT Memes</h1>
             <hr className="bg-warning" />
-            {networkId !== 100 && userAdress !== null && <div className="alert alert-danger mt-2" role="alert">
-                            <AlertFillIcon verticalAlign="middle" size={12} /> Please, configure and <a rel='noreferrer'
-                                href="https://www.xdaichain.com/for-users/wallets/metamask/metamask-setup" className="alert-link">switch to xDai network.</a>
-                        </div>}
-       <Feedmeme arrNft={userMemes} status={statusUser} />
-       {userMemes?.length===0&&<button className="btn btn-warning mt-2" onClick={()=>dispatch(getUserMemes(userAdress))} >Update</button>}
+            <button onClick={testFun}>GGGGGGGGG</button>
+            <div className='d-flex'>
+            {userNft&&userNft.map((item=>{
+                return (
+                    <div className='d-flex flex-column'>
+                    <MemeTemplate img={item.url} title={item.title} />
+                    <div className="d-grid gap-2 p-2">
+                        
+                        <button onClick={()=>dispatch(pickupNftWaves({ id: item.id, id_asset: item.id_asset}))} className="btn btn-success" type="button">PickUp</button>
+                        <ButtonGroup className="col-4">
+                                    <ToggleButton
+                                        id='1'
+                                        type="radio"
+                                        variant={radioValue === '1' ? 'warning' : 'outline-warning'}
+                                        name="radio"
+                                        value={1}
+                                        checked={radioValue === 1}
+                                        onChange={(e) => setRadioValue(e.currentTarget.value)}
+                                    >
+                                        Public
+                                    </ToggleButton>
+                                    <ToggleButton
+                                        id='0'
+                                        type="radio"
+                                        variant={radioValue === '0' ? 'warning' : 'outline-warning'}
+                                        name="radio"
+                                        value={0}
+                                        checked={radioValue === 0}
+                                        onChange={(e) => setRadioValue(e.currentTarget.value)}
+                                    >
+                                        Private
+                                    </ToggleButton>
+                                </ButtonGroup>
+                                <div className="d-grid col-8 mb-3">
+                                    <h5>Price in Waves</h5>
+                                    <input disabled={!(radioValue==='1')} type="text" id="inputPrice" className="form-control" value={currentPrice} placeholder="Must be more 0" onChange={e => setCurrentPrice(e.target.value)} />
+                                </div>
+                        <button onClick={()=>changeInfo(item.id, item.id_asset, radioValue, currentPrice)} className="btn btn-success" type="button">Change info</button>
+                    </div>
+                    </div>
+                )
+            }))}
+            </div>
         </div>
-
     </div>
 }
