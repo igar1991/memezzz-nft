@@ -21,6 +21,12 @@ export const Profile = () => {
         }
     },[dispatch, userAdress, userNft ])
 
+    const testFun =()=>{
+        console.log('1111')
+        dispatch(getUserNftWaves(userAdress))
+        // dispatch(pickupNftWaves({ id, id_asset}))
+        // dispatch(changeNftWaves({ id, id_asset, isTradable, price}))
+    }
 
     const changeInfo =(id, id_asset, isTradable, price)=>{
         const trade = isTradable==='1'?true: false
