@@ -46,7 +46,6 @@ export const mintNftAdmin = createAsyncThunk('admin/mintNftAdmin',
                             'Content-Type': 'application/x-www-form-urlencoded'
                         }
                     });
-                    console.log(encryptedMessage);
                     return response.json();
                 });
         } catch (error) {

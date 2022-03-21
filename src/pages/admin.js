@@ -35,6 +35,8 @@ export const Admin = () => {
                 <p className="text-white">{item.title}</p>
                 <h4>Adress creator:</h4>
                 <p className="text-white">{item.creator}</p>
+                <h4>Price:</h4>
+                <p className="text-white">{item.price}</p>
                 <h4>Status for marketplace:</h4>
                 {item.public === 1 ? <p className="text-success fs-4">Public</p> : <p className="text-danger fs-4">Private</p>}
               </div>

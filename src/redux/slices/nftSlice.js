@@ -96,10 +96,10 @@ export const createNft = createAsyncThunk('nft/createNft',
 
 
 export const buyNftWaves = createAsyncThunk('nft/buyNftWaves',
-    async function ({ id, id_asset, price, newprice, tradable }, { rejectWithValue }) {
+    async function ({ id, id_asset, price, newprice, tradable, id_post }, { rejectWithValue }) {
         try {
             const trade = tradable === '1' ? true : false
-            console.log(+(price*1.05*100000000).toFixed(0), id_asset, +newprice*100000000,trade)
+            console.log(id, id_asset, price, newprice, tradable)
             const data = {
                 dApp: '3N4bt53eU7kwBbhAkh2KFYajCc1kAtu9TY8',
                 fee: 500000,
@@ -284,33 +284,25 @@ export const nftSlice = createSlice({
             state.error = action.payload
         },
         [buyNftWaves.pending]: (state) => {
-            state.status = 'pending'
         },
         [buyNftWaves.fulfilled]: (state, action) => {
-            state.status = "complit"
         },
         [buyNftWaves.rejected]: (state, action) => {
-            state.status = "error"
             state.error = action.payload
         },
         [pickupNftWaves.pending]: (state) => {
             state.status = 'pending'
         },
         [pickupNftWaves.fulfilled]: (state, action) => {
-            state.status = "complit"
         },
         [pickupNftWaves.rejected]: (state, action) => {
-            state.status = "error"
             state.error = action.payload
         },
         [changeNftWaves.pending]: (state) => {
-            state.status = 'pending'
         },
         [changeNftWaves.fulfilled]: (state, action) => {
-            state.status = "complit"
         },
         [changeNftWaves.rejected]: (state, action) => {
-            state.status = "error"
             state.error = action.payload
         }
     }

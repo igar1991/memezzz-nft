@@ -6,8 +6,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { uploadNft, createNft, clearMeta, openModalNft, sendNftWaves } from '../redux/slices/nftSlice';
 import { Modal, ButtonGroup, ToggleButton, Form } from "react-bootstrap";
 import { Link } from 'react-router-dom';
-import { UploadIcon, AlertFillIcon } from '@primer/octicons-react';
+import { AlertFillIcon } from '@primer/octicons-react';
 import ReCAPTCHA from "react-google-recaptcha";
+import { chooseMeme } from '../redux/slices/mainSlice';
 
 
 
@@ -16,13 +17,14 @@ export const Create = () => {
 
     const stageRef = useRef(null);
     const dispatch = useDispatch()
-
+    const [titleV, setTitleV] = useState(false);
+    const [priceV, setPriceV] = useState(false);
     const [title, setTitle] = useState('')
+    const [currentPrice, setCurrentPrice] = useState('');
     const [captcha, setCaptcha] = useState(true)
     const [radioValue, setRadioValue] = useState('1');
-    const [currentPrice, setCurrentPrice] = useState('');
     const { currentMeme, textOptions, widthCanvas, heightCanvas } = useSelector(state => state.main)
-    const { metaUrl, status, modalNft, statusUpload } = useSelector(state => state.nft)
+    const { metaUrl, status, modalNft } = useSelector(state => state.nft)
     const { userAdress, metaInstalled, networkId, nameBlockchain } = useSelector(state => state.login)
 
     useEffect(() => {
@@ -37,7 +39,6 @@ export const Create = () => {
         if (status === 'created') {
             dispatch(clearMeta())
         }
-        return setCaptcha(true)
 
     }, [status, dispatch])
 
@@ -45,12 +46,39 @@ export const Create = () => {
         setCaptcha(false)
     }
 
+    const titleValid = () => {
+        console.log(title.length)
+        if (title.length < 4) {
+            setTitleV(true)
+            return true
+        }
+        if (title.length > 16) {
+            setTitleV(true)
+            return true
+        }
+        setTitleV(false)
+        return false
+    }
+
+    const priceValid = () => {
+        if (currentPrice <= 0) {
+            setPriceV(true)
+            return true
+        }
+        if (currentPrice > 1000000) {
+            setPriceV(true)
+            return true
+        }
+        setPriceV(false)
+        return false
+    }
+
     const upload = async () => {
-        return new Promise((resolve, reject)=>{
+        return new Promise((resolve, reject) => {
             let img = document.createElement("img");
             img.src = currentMeme.url
             img.crossOrigin = "anonymous"
-    
+
             img.onload = function () {
                 const indy = currentMeme.height / heightCanvas
                 let canvas = document.createElement("canvas")
@@ -75,10 +103,10 @@ export const Create = () => {
                         return file
                     })
                     .then(res => dispatch(uploadNft({ image: res, title: title })))
-                    .then(data=>resolve(data))
+                    .then(data => resolve(data))
             };
         })
-        
+
     }
 
     const backCreate = () => {
@@ -87,6 +115,10 @@ export const Create = () => {
         dispatch(openModalNft(false))
         setRadioValue('1')
         setCurrentPrice('')
+        setPriceV(false)
+        setTitleV(false)
+        setCaptcha(true)
+        dispatch(chooseMeme(null))
     }
 
     const createGo = () => {
@@ -104,20 +136,34 @@ export const Create = () => {
             }
             dispatch(createNft({ ad: userAdress, metaData: metaUrl.metaUrl }))
         } else if (nameBlockchain === 'waves') {
-            upload().then((data)=>{
-                const item = {
-                    creator: userAdress,
-                    owner: userAdress,
-                    url: data.payload.imageUrl,
-                    title: title,
-                    public: Number(radioValue),
-                    status: 'start',
-                    price: Number(currentPrice)
-                }
-                dispatch(sendNftWaves(item))
-            })
-            
-            
+            if (radioValue==='1'&&!titleValid()&&!priceValid()) {
+                upload().then((data) => {
+                    const item = {
+                        creator: userAdress,
+                        owner: userAdress,
+                        url: data.payload.imageUrl,
+                        title: title,
+                        public: +radioValue,
+                        status: 'start',
+                        price: +currentPrice
+                    }
+                    dispatch(sendNftWaves(item))
+                })
+            }
+            if (radioValue==='0'&&!titleValid()) {
+                upload().then((data) => {
+                    const item = {
+                        creator: userAdress,
+                        owner: userAdress,
+                        url: data.payload.imageUrl,
+                        title: title,
+                        public: +radioValue,
+                        status: 'start',
+                        price: 0
+                    }
+                    dispatch(sendNftWaves(item))
+                })
+            }
         }
 
     }
@@ -132,64 +178,93 @@ export const Create = () => {
                 <GenerateMeme stageRef={stageRef} />
                 <hr />
                 {currentMeme && <div className="d-flex flex-column justify-content-end align-content-end align-items-center">
-                            {userAdress === null && <div className="alert alert-danger mt-2" role="alert">
-                                <AlertFillIcon verticalAlign="middle" size={12} />For create NFT, login please.
-                            </div>}
-                            {nameBlockchain === "waves" && <div className="mt-2 d-flex flex-column align-items-center col-12 col-md-6">
-                                <ButtonGroup className="col-4">
-                                    <ToggleButton
-                                        id='1'
-                                        type="radio"
-                                        variant={radioValue === '1' ? 'warning' : 'outline-warning'}
-                                        name="radio"
-                                        value={1}
-                                        checked={radioValue === 1}
-                                        onChange={(e) => setRadioValue(e.currentTarget.value)}
-                                    >
-                                        Public
-                                    </ToggleButton>
-                                    <ToggleButton
-                                        id='0'
-                                        type="radio"
-                                        variant={radioValue === '0' ? 'warning' : 'outline-warning'}
-                                        name="radio"
-                                        value={0}
-                                        checked={radioValue === 0}
-                                        onChange={(e) => setRadioValue(e.currentTarget.value)}
-                                    >
-                                        Private
-                                    </ToggleButton>
-                                </ButtonGroup>
-                                <div className="d-grid col-8 mb-3">
-                                    <h5>Title</h5>
-                                    <input maxLength={16} value={title} onChange={(e) => setTitle(e.target.value)} type="text" className="form-control" id="exampleFormControlInput1" placeholder="Must be 4-16 characters" />
-                                </div>
-                                <div className="d-grid col-8 mb-3">
-                                    <h5>Price in Waves</h5>
-                                    <input disabled={!(radioValue==='1')} type="text" id="inputPrice" className="form-control" value={currentPrice} placeholder="Must be more 0" onChange={e => setCurrentPrice(e.target.value)} />
-                                </div>
-                                {/* {radioValue === '1'&&<>
+                    {userAdress === null && <div className="alert alert-danger mt-2" role="alert">
+                        <AlertFillIcon verticalAlign="middle" size={12} />For create NFT, login please.
+                    </div>}
+                    {nameBlockchain === "waves" && <div className="mt-2 d-flex flex-column align-items-center col-12 col-md-6">
+                        <ButtonGroup className="col-4">
+                            <ToggleButton
+                                id='1'
+                                type="radio"
+                                variant={radioValue === '1' ? 'warning' : 'outline-warning'}
+                                name="radio"
+                                value={1}
+                                checked={radioValue === 1}
+                                onChange={(e) => setRadioValue(e.currentTarget.value)}
+                            >
+                                Public
+                            </ToggleButton>
+                            <ToggleButton
+                                id='0'
+                                type="radio"
+                                variant={radioValue === '0' ? 'warning' : 'outline-warning'}
+                                name="radio"
+                                value={0}
+                                checked={radioValue === 0}
+                                onChange={(e) => setRadioValue(e.currentTarget.value)}
+                            >
+                                Private
+                            </ToggleButton>
+                        </ButtonGroup>
+                        <div className='col-8'>
+                            <Form.Label>Title</Form.Label>
+                            <Form.Control
+                                required
+                                id="title"
+                                type="text"
+                                maxLength={16}
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
+                                isInvalid={titleV}
+                            />
+                            <Form.Text muted>
+                            Must be 4-16 characters
+                            </Form.Text>
+                            <Form.Control.Feedback type="invalid">
+                                Title not correct!
+                            </Form.Control.Feedback>
+                        </div>
+                        <div className='col-8'>
+                            <Form.Label>Price in Waves</Form.Label>
+                            <Form.Control
+                                required
+                                id="price"
+                                type="number"
+                                maxLength={8}
+                                value={currentPrice}
+                                onChange={(e) => setCurrentPrice(e.target.value)}
+                                isInvalid={radioValue==='1'?priceV:false}
+                                disabled={!(radioValue === '1')}
+                            />
+                            <Form.Text muted>
+                            Must be more 0
+                            </Form.Text>
+                            <Form.Control.Feedback type="invalid">
+                                Price not correct!
+                            </Form.Control.Feedback>
+                        </div>
+                        {/* {radioValue === '1'&&<>
                             <div className="alert alert-warning mt-2" role="alert">
                             <AlertFillIcon verticalAlign="middle" size={12} /> After moderation, DApp will create the NFT and publish it on our Marketplace in <a rel='noreferrer'
                                 href="https://t.me/nftmemez" className="alert-link" target="_blank"> the telegram channel.</a></div>
                             </>} */}
-                                {/* {radioValue === '0'&&<>
+                        {/* {radioValue === '0'&&<>
                             <div className="alert alert-warning mt-2" role="alert">
                             <AlertFillIcon verticalAlign="middle" size={12} /> At the moment, only free NFT creation is available, so after moderation it will appear in your profile.</div>
                             </>} */}
-                            </div>}
-                            {/* {networkId !== 100 && userAdress !== null && nameBlockchain === "ethereum" && <div className="alert alert-danger mt-2" role="alert">
+                    </div>}
+                    {/* {networkId !== 100 && userAdress !== null && nameBlockchain === "ethereum" && <div className="alert alert-danger mt-2" role="alert">
                             <AlertFillIcon verticalAlign="middle" size={12} /> Please, configure and <a rel='noreferrer'
                                 href="https://www.xdaichain.com/for-users/wallets/metamask/metamask-setup" className="alert-link" target="_blank">switch to xDai network.</a>
                         </div>} */}
-                            <ReCAPTCHA
-                                className='ms-auto me-auto mt-2'
-                                sitekey="6LdNcoQeAAAAALqGpHzi-ZokSl4sPkCOhJSUUWMK"
-                                onChange={onChangeCap}
-                            />
-                            <div className="d-grid col-4 mb-3">
-                            <button className="btn btn-success mt-2" onClick={createGo} disabled={nameBlockchain === 'ethereum' ? networkId !== 100 || userAdress === null || captcha : userAdress === null || captcha} >Create NFT</button>
-                            </div>
+                    <ReCAPTCHA
+                        className='ms-auto me-auto mt-2'
+                        sitekey="6LdNcoQeAAAAALqGpHzi-ZokSl4sPkCOhJSUUWMK"
+                        onChange={onChangeCap}
+                    />
+                    <div className="d-grid col-4 mb-3">
+                        <button className="btn btn-success mt-2" onClick={createGo} disabled={nameBlockchain === 'ethereum' ? networkId !== 100 || userAdress === null || captcha : userAdress === null || captcha} >Create NFT</button>
+                    </div>
                 </div>}
 
                 <Modal
@@ -206,10 +281,10 @@ export const Create = () => {
                     </Modal.Header>
                     <Modal.Body className='bg-dark text-center text-white'>
                         {status === 'complit' && <div>
-                            {radioValue==='1'?<h3>After moderation, DApp will create the NFT and publish it on our Marketplace in <a rel='noreferrer'
-                                href="https://t.me/nftmemez" className="alert-link" target="_blank"> the telegram channel.</a></h3>:<h3>At the moment, only free NFT creation is available, so after moderation it will appear in your profile.</h3>}
+                            {radioValue === '1' ? <h3>After moderation, DApp will create the NFT and publish it on our Marketplace in <a rel='noreferrer'
+                                href="https://t.me/nftmemez" className="alert-link" target="_blank"> the telegram channel.</a></h3> : <h3>At the moment, only free NFT creation is available, so after moderation it will appear in your profile.</h3>}
 
-                            </div>}
+                        </div>}
                         {status === 'pending' &&
                             <><h3 className='text-warning'>Creation...</h3>
                                 <div className="spinner-border text-warning" role="status">
