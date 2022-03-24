@@ -25,22 +25,22 @@ export const Meme = () => {
 
     const url = 'https://testnet.wavesexplorer.com/address/'
 
-const Buyfunc = (id, id_asset, price, newprice, tradable )=>{
-    if(newprice<=0&&tradable==='1') {
-        setPriceV(true)
-        return
+    const Buyfunc = (id, id_asset, price, newprice, tradable) => {
+        if (newprice <= 0 && tradable === '1') {
+            setPriceV(true)
+            return
+        }
+        if (newprice > 100000000 && tradable === '1') {
+            setPriceV(true)
+            return
+        }
+        if (!(tradable === '1')) {
+            dispatch(buyNftWaves({ id, id_asset, price, newprice: 0, tradable }))
+        } else {
+            dispatch(buyNftWaves({ id, id_asset, price, newprice, tradable }))
+        }
     }
-    if(newprice>100000000&&tradable==='1') {
-        setPriceV(true)
-        return
-    }
-    if(!(tradable==='1')) {
-        dispatch(buyNftWaves({id, id_asset,price, newprice: 0, tradable }))
-    } else {
-        dispatch(buyNftWaves({id, id_asset,price, newprice, tradable }))
-    }
-}
-      
+
     return <>
         <Navbar />
         <div className="p-3" style={{ backgroundColor: "black", minHeight: "90vh" }}>
@@ -54,66 +54,64 @@ const Buyfunc = (id, id_asset, price, newprice, tradable )=>{
                     <div className='col-12 col-md-4'>
                         <h3>{nftData.title}</h3>
                         <hr />
-                        <h4>Creator:</h4>
+                        <h5>Creator:</h5>
                         <a rel='noreferrer'
-                                href={`${url}${nftData.creator}`} className="alert-link" target="_blank">{nftData.creator}</a>
-                        <h4>Owner:</h4>
+                            href={`${url}${nftData.creator}`} className="alert-link" target="_blank">{nftData.creator}</a>
+                        <h5>Owner:</h5>
                         <a rel='noreferrer'
-                                href={`${url}${nftData.owner}`} className="alert-link" target="_blank">{nftData.owner}</a>
-                        {+nftData.public===1 && <>
-                            <h4>Price:</h4>
-                        <p className="text-white">{(Number(nftData.price)*1.05).toFixed(2)}</p>
-                        <ButtonGroup className="col-4">
-                                    <ToggleButton
-                                        id='1'
-                                        type="radio"
-                                        variant={radioValue === '1' ? 'warning' : 'outline-warning'}
-                                        name="radio"
-                                        value={'1'}
-                                        checked={radioValue === '1'}
-                                        onChange={(e) => setRadioValue(e.currentTarget.value)}
-                                    >
-                                        Public
-                                    </ToggleButton>
-                                    <ToggleButton
-                                        id='0'
-                                        type="radio"
-                                        variant={radioValue === '0' ? 'warning' : 'outline-warning'}
-                                        name="radio"
-                                        value={'0'}
-                                        checked={radioValue === '0'}
-                                        onChange={(e) => setRadioValue(e.currentTarget.value)}
-                                    >
-                                        Private
-                                    </ToggleButton>
-                                </ButtonGroup>
-                                <div className='col-8'>
-                            <Form.Label>Price in Waves</Form.Label>
-                            <Form.Control
-                                required
-                                id="price"
-                                type="number"
-                                maxLength={8}
-                                value={currentPrice}
-                                onChange={(e) => setCurrentPrice(e.target.value)}
-                                isInvalid={radioValue==='1'?priceV:false}
-                                disabled={!(radioValue === '1')}
-                            />
-                            <Form.Text muted>
-                            Must be more 0
-                            </Form.Text>
-                            <Form.Control.Feedback type="invalid">
-                                Price not correct!
-                            </Form.Control.Feedback>
-                        </div>
-                        <div className="d-grid gap-2 mt-1">
-                            <button onClick={()=>Buyfunc(nftData.id, nftData.id_asset,nftData.price, currentPrice, radioValue)} className="btn btn-success" type="button">{radioValue==='1'? 'Buy and public':'Buy'}</button>
-                        </div>
+                            href={`${url}${nftData.owner}`} className="alert-link" target="_blank">{nftData.owner}</a>
+                        {+nftData.public === 1 && <>
+                            <h5>Price:</h5>
+                            <p className="text-white">{(Number(nftData.price) * 1.05).toFixed(2)}</p>
+                            <ButtonGroup className="col-4">
+                                <ToggleButton
+                                    id='1'
+                                    type="radio"
+                                    variant={radioValue === '1' ? 'warning' : 'outline-warning'}
+                                    name="radio"
+                                    value={'1'}
+                                    checked={radioValue === '1'}
+                                    onChange={(e) => setRadioValue(e.currentTarget.value)}
+                                >
+                                    Public
+                                </ToggleButton>
+                                <ToggleButton
+                                    id='0'
+                                    type="radio"
+                                    variant={radioValue === '0' ? 'warning' : 'outline-warning'}
+                                    name="radio"
+                                    value={'0'}
+                                    checked={radioValue === '0'}
+                                    onChange={(e) => setRadioValue(e.currentTarget.value)}
+                                >
+                                    Private
+                                </ToggleButton>
+                            </ButtonGroup>
+                            <div className='col-8'>
+                                <Form.Label className="text-primary mt-1">Price in Waves</Form.Label>
+                                <Form.Control
+                                    required
+                                    id="price"
+                                    type="number"
+                                    maxLength={8}
+                                    value={currentPrice}
+                                    onChange={(e) => setCurrentPrice(e.target.value)}
+                                    isInvalid={radioValue === '1' ? priceV : false}
+                                    disabled={!(radioValue === '1')}
+                                />
+                                <Form.Text muted>
+                                    Must be more 0
+                                </Form.Text>
+                                <Form.Control.Feedback type="invalid">
+                                    Price not correct!
+                                </Form.Control.Feedback>
+                            </div>
+                            <div className="d-grid gap-2 mt-1">
+                                <button onClick={() => Buyfunc(nftData.id, nftData.id_asset, nftData.price, currentPrice, radioValue)} className="btn btn-success" type="button">{radioValue === '1' ? 'Buy and public' : 'Buy'}</button>
+                            </div>
                         </>}
-                        
                     </div>
                 </div>}
-
             </div>
         </div>
 

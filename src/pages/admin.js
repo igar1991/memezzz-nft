@@ -20,7 +20,7 @@ export const Admin = () => {
     <div className="p-3" style={{ backgroundColor: "black", minHeight: "100vh" }}>
       {arrPublicKey.includes(publicKey) && allNft && <div>
         <div className="d-grid gap-2">
-          <button onClick={()=>dispatch(getNft())} className='btn btn-block btn-primary m-1'>Reload</button>
+          <button onClick={() => dispatch(getNft())} className='btn btn-block btn-primary m-1'>Reload</button>
         </div>
         {allNft.map((item, index) => {
           return (
@@ -42,9 +42,9 @@ export const Admin = () => {
               </div>
               <div className='col-4 border border-white p-1'>
                 <h4>Status:</h4>
-                <p className={`text-${item.status==='start'?'success':'danger'} fs-4`}>{item.status}</p>
-                <button onClick={()=>dispatch(mintNftAdmin(item.id))} className='btn btn-block btn-success m-1'>Create NFT</button>
-                <button onClick={()=>dispatch(rejectNftAdmin(item.id))} className='btn btn-block btn-danger m-1'>Reject</button>
+                <p className={`text-${item.status === 'start' ? 'success' : 'danger'} fs-4`}>{item.status}</p>
+                <button onClick={() => dispatch(mintNftAdmin(item.id))} className='btn btn-block btn-success m-1'>Create NFT</button>
+                <button onClick={() => dispatch(rejectNftAdmin(item.id))} className='btn btn-block btn-danger m-1'>Reject</button>
               </div>
             </div>
           )

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Modal, Dropdown } from "react-bootstrap";
 import { useDispatch, useSelector } from 'react-redux';
 import { getAdressWaves, modalisMeta, getAdressMeta } from '../redux/slices/loginSlice';
@@ -15,6 +15,7 @@ import './Component.css';
 
 export const Navbar = () => {
     const dispatch = useDispatch()
+    const navigate = useNavigate();
 
     const [burger, setBurger] = useState(false)
     const [keeper, setKeeper] = useState(false)
@@ -31,15 +32,15 @@ export const Navbar = () => {
         }
     }
 
-    const loginMeta = () => {
-        if (window.ethereum) {
-            dispatch(getAdressMeta())
-            dispatch(getNetwork(window.ethereum.networkVersion))
-            dispatch(modalisMeta(false))
-        } else {
-            setMeta(true)
-        }
-    }
+    // const loginMeta = () => {
+    //     if (window.ethereum) {
+    //         dispatch(getAdressMeta())
+    //         dispatch(getNetwork(window.ethereum.networkVersion))
+    //         dispatch(modalisMeta(false))
+    //     } else {
+    //         setMeta(true)
+    //     }
+    // }
 
     const onHideModal = () => {
         dispatch(modalisMeta(false))
@@ -73,7 +74,7 @@ export const Navbar = () => {
                                     My profile
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu>
-                                    <Dropdown.Item href="#/action-1"><Link to='/profile'>My NFT</Link></Dropdown.Item>
+                                    <Dropdown.Item onClick={()=>navigate('/profile')}>My NFT</Dropdown.Item>
                                     <Dropdown.Item onClick={()=>dispatch(logout())}>Sign out</Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>

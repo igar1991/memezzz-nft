@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeText, chooseMeme, postHeight, postWidth } from '../redux/slices/mainSlice';
 import { Stage, Layer, Text } from 'react-konva';
-import { Modal } from "react-bootstrap";
+import { Modal, Form } from "react-bootstrap";
 import { Newmeme } from '../components/newmeme';
 import { MemeImage } from '../components/memeImage';
 
@@ -81,17 +81,15 @@ export const GenerateMeme = ({ stageRef }) => {
                 </Stage>}
             </div>
             <div className="col-11 col-sm-4">
-                <div>
-                    <label className="btn btn-primary mb-1">
+                    <label className="btn btn-primary m-1">
                         <input className="d-none" type="file" onChange={(e) => _onChange(e.target.files[0])} />
                         Upload image from device
                     </label>
-                    <button type="button" className="btn btn-primary ms-1" onClick={() => setLgShow(true)}>Сhoose a template</button>
-                </div>
+                    <button type="button" className="btn btn-primary m-1" onClick={() => setLgShow(true)}>Сhoose a template</button>
                 {textOptions.map((el, index) => <div key={index}>
                     <input
                         disabled={!currentMeme}
-                        className="form-control m-2"
+                        className="form-control m-1"
                         type="text"
                         name="topText"
                         placeholder="Text"
@@ -99,12 +97,12 @@ export const GenerateMeme = ({ stageRef }) => {
                         onChange={(e) =>  dispatch(changeText(textOptions.map((item) => item.id === el.id ? { ...item, text: e.target.value } : item)))}
                     />
                     <div className="d-flex align-items-center">
-                        <h5 className="col-3">Font: {el.fontsize}px</h5 >
+                        <Form.Label className="col-3">Font: {el.fontsize}px</Form.Label >
                         <input type="range" className="form-range ms-1 me-1" min={10} max={70} value={el.fontsize} onChange={(e) => dispatch(changeText(textOptions.map((item) => item.id === el.id ? { ...item, fontsize: Number(e.target.value) } : item)))} />
                         <input type="color" className="form-control form-control-color" id="exampleColorInput" value={el.fontcolor} title="Choose your font color" onChange={(e) => dispatch(changeText(textOptions.map((item) => item.id === el.id ? { ...item, fontcolor: e.target.value } : item)))}></input>
                     </div>
                 </div>)}
-                {textOptions.length < 4 && <button type="button" className="btn btn-primary" onClick={() => dispatch(changeText([...textOptions, {
+                {textOptions.length < 4 && <button type="button" className="btn btn-primary m-1" onClick={() => dispatch(changeText([...textOptions, {
                     id: textOptions.length,
                     isDragging: false,
                     x: 50,

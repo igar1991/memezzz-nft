@@ -136,7 +136,7 @@ export const Create = () => {
             }
             dispatch(createNft({ ad: userAdress, metaData: metaUrl.metaUrl }))
         } else if (nameBlockchain === 'waves') {
-            if (radioValue==='1'&&!titleValid()&&!priceValid()) {
+            if (radioValue === '1' && !titleValid() && !priceValid()) {
                 upload().then((data) => {
                     const item = {
                         creator: userAdress,
@@ -144,13 +144,13 @@ export const Create = () => {
                         url: data.payload.imageUrl,
                         title: title,
                         public: +radioValue,
-                        status: 'start',
+                        status: 'moderation',
                         price: +currentPrice
                     }
                     dispatch(sendNftWaves(item))
                 })
             }
-            if (radioValue==='0'&&!titleValid()) {
+            if (radioValue === '0' && !titleValid()) {
                 upload().then((data) => {
                     const item = {
                         creator: userAdress,
@@ -158,7 +158,7 @@ export const Create = () => {
                         url: data.payload.imageUrl,
                         title: title,
                         public: +radioValue,
-                        status: 'start',
+                        status: 'moderation',
                         price: 0
                     }
                     dispatch(sendNftWaves(item))
@@ -218,7 +218,7 @@ export const Create = () => {
                                 isInvalid={titleV}
                             />
                             <Form.Text muted>
-                            Must be 4-16 characters
+                                Must be 4-16 characters
                             </Form.Text>
                             <Form.Control.Feedback type="invalid">
                                 Title not correct!
@@ -233,11 +233,11 @@ export const Create = () => {
                                 maxLength={8}
                                 value={currentPrice}
                                 onChange={(e) => setCurrentPrice(e.target.value)}
-                                isInvalid={radioValue==='1'?priceV:false}
+                                isInvalid={radioValue === '1' ? priceV : false}
                                 disabled={!(radioValue === '1')}
                             />
                             <Form.Text muted>
-                            Must be more 0
+                                Must be more 0
                             </Form.Text>
                             <Form.Control.Feedback type="invalid">
                                 Price not correct!
@@ -275,14 +275,14 @@ export const Create = () => {
 
                 >
                     <Modal.Header closeButton className='bg-dark text-white'>
-                        <Modal.Title>
+                        <Modal.Title className="text-warning">
                             Create NFT
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body className='bg-dark text-center text-white'>
                         {status === 'complit' && <div>
-                            {radioValue === '1' ? <h3>After moderation, DApp will create the NFT and publish it on our Marketplace in <a rel='noreferrer'
-                                href="https://t.me/nftmemez" className="alert-link" target="_blank"> the telegram channel.</a></h3> : <h3>At the moment, only free NFT creation is available, so after moderation it will appear in your profile.</h3>}
+                            {radioValue === '1' ? <p>After moderation, DApp will create the NFT and publish it on our Marketplace in <a rel='noreferrer'
+                                href="https://t.me/nftmemez" className="alert-link" target="_blank"> the telegram channel.</a></p> : <p>At the moment, only free NFT creation is available, so after moderation it will appear in your profile.</p>}
 
                         </div>}
                         {status === 'pending' &&

@@ -146,81 +146,6 @@ export const buyNftWaves = createAsyncThunk('nft/buyNftWaves',
     }
 )
 
-export const pickupNftWaves = createAsyncThunk('nft/pickupNftWaves',
-    async function ({ id, id_asset}, { rejectWithValue }) {
-        console.log(id_asset)
-        try {
-            const data = {
-                dApp: '3N4bt53eU7kwBbhAkh2KFYajCc1kAtu9TY8',
-                fee: 500000,
-                chainId: 84,
-                call: {
-                  function: 'pickUp',
-                  args: [
-                    { type: 'string', value: id_asset },
-                  ],
-                },
-              }
-              const [tx] = await signer
-                .invoke(data)
-                .broadcast();
-                console.log(tx.sender)
-
-                const response = await fetch(`${url}/pickup-nft/${id}`)
-                return response.ok
-
-        } catch (error) {
-            return rejectWithValue(error)
-        }
-    }
-)
-
-export const changeNftWaves = createAsyncThunk('nft/changeNftWaves',
-    async function ({ id, id_asset, isTradable, price}, { rejectWithValue }) {
-        console.log(id, id_asset, isTradable, price)
-        try {
-            const data = {
-                dApp: '3N4bt53eU7kwBbhAkh2KFYajCc1kAtu9TY8',
-                fee: 500000,
-                chainId: 84,
-                call: {
-                  function: 'setTokenInfo',
-                  args: [
-                    { type: 'string', value: id_asset },
-                    { type: 'boolean', value: isTradable },
-                    { type: 'integer', value: price },
-                    
-                  ],
-                },
-              }
-              const [tx] = await signer
-                .invoke(data)
-                .broadcast();
-                console.log(tx.sender)
-                let form_data = new URLSearchParams();
-                const item = {
-                    price: price,
-                    public: isTradable?'1':'0',
-                }
-                console.log(item)
-                for (let key in item) {
-                    form_data.append(key, item[key]);
-                }
-                const response = await fetch(`${url}/change-nft/${id}`, {
-                    method: 'POST',
-                    body: form_data,
-                    mode: 'no-cors',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    }
-                })
-
-        } catch (error) {
-            return rejectWithValue(error)
-        }
-    }
-)
-
 
 export const nftSlice = createSlice({
     name: "nft",
@@ -288,21 +213,6 @@ export const nftSlice = createSlice({
         [buyNftWaves.fulfilled]: (state, action) => {
         },
         [buyNftWaves.rejected]: (state, action) => {
-            state.error = action.payload
-        },
-        [pickupNftWaves.pending]: (state) => {
-            state.status = 'pending'
-        },
-        [pickupNftWaves.fulfilled]: (state, action) => {
-        },
-        [pickupNftWaves.rejected]: (state, action) => {
-            state.error = action.payload
-        },
-        [changeNftWaves.pending]: (state) => {
-        },
-        [changeNftWaves.fulfilled]: (state, action) => {
-        },
-        [changeNftWaves.rejected]: (state, action) => {
             state.error = action.payload
         }
     }
