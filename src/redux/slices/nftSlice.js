@@ -100,20 +100,21 @@ export const buyNftWaves = createAsyncThunk('nft/buyNftWaves',
         try {
             const trade = tradable === '1' ? true : false
             console.log(id, id_asset, price, newprice, tradable)
+            console.log(id, id_asset, +(price*1.05*100000000).toFixed(0), +newprice*100000000, trade)
             const data = {
                 dApp: '3N4bt53eU7kwBbhAkh2KFYajCc1kAtu9TY8',
                 fee: 500000,
                 chainId: 84,
                 payment: [{
                     assetId: "WAVES",
-                    amount: +(price*1.05*100000000).toFixed(0),
+                    amount: (+price*1.05*100000000).toFixed(0),
                   }],
                 call: {
                   function: 'buy',
                   args: [
                     { type: 'string', value: id_asset },
                     { type: 'boolean', value: trade },
-                    { type: 'integer', value: +newprice*100000000 },
+                    { type: 'integer', value: (+newprice*100000000).toFixed(0) },
                   ],
                 },
               }

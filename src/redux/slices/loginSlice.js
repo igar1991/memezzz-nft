@@ -102,7 +102,7 @@ export const changeNftWaves = createAsyncThunk('waves/changeNft',
                     args: [
                         { type: 'string', value: id_asset },
                         { type: 'boolean', value: isTradable },
-                        { type: 'integer', value: price },
+                        { type: 'integer', value: (+price*100000000).toFixed(0) },
 
                     ],
                 },
