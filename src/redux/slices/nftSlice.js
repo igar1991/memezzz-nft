@@ -6,7 +6,7 @@ import { ProviderKeeper } from '@waves/provider-keeper';
 
 const { providers } = require('ethers');
 const bee = new Bee('https://gateway-proxy-bee-8-0.gateway.ethswarm.org');
-const url = 'http://localhost:3007';
+const url = 'https://api-memez.testeron.pro';
 
 const signer = new Signer({
     // Specify URL of the node on Testnet
@@ -44,8 +44,9 @@ export const sendNftWaves = createAsyncThunk('nft/sendNftWaves',
         for (let key in item) {
             form_data.append(key, item[key]);
         }
+        console.log(item)
         try {
-            const response = await fetch('http://localhost:3007/new-nft/', {
+            const response = await fetch('https://api-memez.testeron.pro/new-nft/', {
                 method: 'POST',
                 body: form_data,
                 mode: 'no-cors',

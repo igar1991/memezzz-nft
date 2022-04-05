@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-const url = 'http://localhost:3007'
+const url = 'https://api-memez.testeron.pro'
 
 export const getNft = createAsyncThunk('admin/getNft',
     async function (_, { rejectWithValue }) {
@@ -46,7 +46,6 @@ export const mintNftAdmin = createAsyncThunk('admin/mintNftAdmin',
                             'Content-Type': 'application/x-www-form-urlencoded'
                         }
                     });
-                    return response.json();
                 });
         } catch (error) {
             return rejectWithValue(error)
