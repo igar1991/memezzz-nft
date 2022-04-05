@@ -9,7 +9,7 @@ const signer = new Signer({
     // Specify URL of the node on Testnet
     NODE_URL: 'https://nodes-testnet.wavesnodes.com',
 });
-const keeper = new ProviderKeeper();
+  const keeper = new ProviderKeeper();
 signer.setProvider(keeper)
 
 
