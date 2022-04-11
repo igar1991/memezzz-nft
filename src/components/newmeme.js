@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {  getTemplateArr } from '../redux/slices/mainSlice';
-import template_meme from './all-memez.json'
+import template_meme from './all-memez.json';
+import imager from '../file/meme_template'
 
 
 export const Newmeme = ({ closeM }) => {
