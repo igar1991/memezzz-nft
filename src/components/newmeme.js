@@ -7,8 +7,6 @@ import template_meme from './all-memez.json';
 export const Newmeme = ({ closeM }) => {
     const dispatch = useDispatch()
 
-    console.log(template_meme)
-
     const imgTemplate = template_meme
 
     useEffect(() => {

@@ -42,15 +42,14 @@ export const GenerateMeme = ({ stageRef }) => {
         reader.readAsDataURL(file);
     })
 
-    const _onChange = (file) => {
-        fileToDataUri(file)
-            .then(({ src, w, h }) => {
-                dispatch(chooseMeme({ url: src, width: w, height: h }))
-            })
+    const _onChange = async (file) => {
+        const { src, w, h } = await fileToDataUri(file)
+        dispatch(chooseMeme({ url: src, width: w, height: h }))
+        console.log(src)
     }
 
     const closeM = (image) => {
-        dispatch(chooseMeme(image))
+        dispatch(chooseMeme({url: image.path, width: image.width, height: image.height}))
         setLgShow(false)
     }
 
