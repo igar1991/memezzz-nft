@@ -107,7 +107,7 @@ export const Meme = () => {
                                 </Form.Control.Feedback>
                             </div>
                             <div className="d-grid gap-2 mt-1">
-                                <button onClick={() => Buyfunc(nftData.id, nftData.id_asset, nftData.price, currentPrice, radioValue)} className="btn btn-success" type="button">{radioValue === '1' ? 'Buy and public' : 'Buy'}</button>
+                                <button onClick={() => Buyfunc(nftData.id, nftData.id_asset, nftData.price, currentPrice, radioValue)} className="btn btn-success" type="button">{radioValue === '1' ? 'Buy and publish' : 'Buy'}</button>
                             </div>
                         </>}
                     </div>

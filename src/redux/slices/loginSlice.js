@@ -3,6 +3,7 @@ import { Signer } from '@waves/signer';
 import { ProviderKeeper } from '@waves/provider-keeper';
 const { providers } = require('ethers');
 
+//const url = 'http://localhost:3007'
 const url = 'https://api-memez.testeron.pro'
 
 const signer = new Signer({

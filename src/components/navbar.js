@@ -2,16 +2,11 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Modal, Dropdown } from "react-bootstrap";
 import { useDispatch, useSelector } from 'react-redux';
-import { getAdressWaves, modalisMeta, getAdressMeta } from '../redux/slices/loginSlice';
-import { getNetwork } from '../redux/slices/loginSlice';
+import { getAdressWaves, modalisMeta } from '../redux/slices/loginSlice';
 import { logout } from '../redux/slices/loginSlice';
 import logo from '../file/logo.svg';
-import logoMeta from '../file/logometa.png';
 import logoWaves from '../file/logowaves.png';
-import { UploadIcon, AlertFillIcon } from '@primer/octicons-react';
-import './Component.css';
-
-
+import {  AlertFillIcon } from '@primer/octicons-react';
 
 export const Navbar = () => {
     const dispatch = useDispatch()
@@ -21,7 +16,7 @@ export const Navbar = () => {
     const [keeper, setKeeper] = useState(false)
     const [meta, setMeta] = useState(false)
 
-    const { modalMeta, userAdress, networkId } = useSelector(state => state.login)
+    const { modalMeta, userAdress } = useSelector(state => state.login)
 
     const loginWaves = () => {
         if (window.WavesKeeper) {
@@ -47,7 +42,6 @@ export const Navbar = () => {
         setKeeper(false)
         setMeta(false)
     }
-
 
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow">

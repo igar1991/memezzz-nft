@@ -34,12 +34,15 @@ export const MemeTemplate = ({ id }) => {
         const trade = isTradable==='1'?true: false
         if(trade) {
             if(!priceValid()) {
-                dispatch(changeNftWaves({ id, id_asset, isTradable: trade, price: price}))             
+                dispatch(changeNftWaves({ id, id_asset, isTradable: trade, price: price}))  
+                          
+            } else {
+                return
             }
         } else {
             dispatch(changeNftWaves({ id, id_asset, isTradable: trade, price: 0}))
         }
-        setChange(false)
+        setChange(false) 
         const item = userNft.find(i=>i.id===id)
         setState(item)
         setCurrentPrice('')
@@ -69,8 +72,8 @@ export const MemeTemplate = ({ id }) => {
                     <p className={`card-text text-${state.status === 'moderation' ? 'primary' : (state.status === 'minted' ? 'success' : 'danger')}`}>Moderation status: {state.status}!</p>
                     {state.status === 'minted' && <>
                         <hr />
-                        <p className='card-text text-primary'>{`Price: ${state.price} waves`}</p>
-                        <p className='card-text text-warning'>Public: Yes</p>
+                        {Number(state.public)===1&&<p className='card-text text-primary'>{`Price: ${state.price} waves`}</p>}
+                        {Number(state.public)===1?<p className='card-text text-warning'>Public</p>: <p className='card-text text-danger'>Private</p>}
                         <button onClick={()=>setPick(true)} className="btn btn-outline-success" type="button">Pick up</button>
                         <button onClick={() => setChange(true)} className="btn btn-outline-warning ms-1" type="button">Change info</button>
                     </>}
