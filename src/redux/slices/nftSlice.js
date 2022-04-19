@@ -47,7 +47,7 @@ export const sendNftWaves = createAsyncThunk('nft/sendNftWaves',
         }
         console.log(item)
         try {
-            const response = await fetch('http://localhost:3007/new-nft/', {
+            const response = await fetch(`${url}/new-nft/`, {
                 method: 'POST',
                 body: form_data,
                 mode: 'no-cors',
