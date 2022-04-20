@@ -7,7 +7,6 @@ export const getOneNft = createAsyncThunk('onenft/getOneNft',
     async function (id, { rejectWithValue }) {
         try {
             const response = await fetch(`${url}/get-nft/${id}`)
-            console.log(response)
             if (!response.ok) {
                 throw new Error("Server error")
 

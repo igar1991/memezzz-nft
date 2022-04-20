@@ -69,7 +69,7 @@ export const MemeTemplate = ({ id }) => {
                 <img role="button" src={state.url} style={{ height: "15rem", objectFit: "cover" }} className="card-img-top" alt="meme" onClick={() => setOpenModal(true)} />
                 <div className="card-body text-start">
                     <h5 className="card-title text-warning">{state.title}</h5>
-                    <p className={`card-text text-${state.status === 'moderation' ? 'primary' : (state.status === 'minted' ? 'success' : 'danger')}`}>Moderation status: {state.status}!</p>
+                    <p className={`card-text text-${state.status === 'moderation' ? 'primary' : (state.status === 'minted' ? 'success' : 'danger')}`}>Moderation status: {state.status}</p>
                     {state.status === 'minted' && <>
                         <hr />
                         {Number(state.public)===1&&<p className='card-text text-primary'>{`Price: ${state.price} waves`}</p>}
@@ -157,6 +157,7 @@ export const MemeTemplate = ({ id }) => {
                                 required
                                 id="price"
                                 type="number"
+                                step="0.1"
                                 maxLength={8}
                                 value={currentPrice}
                                 onChange={(e) => setCurrentPrice(e.target.value)}
@@ -164,7 +165,7 @@ export const MemeTemplate = ({ id }) => {
                                 disabled={!(radioValue === '1')}
                             />
                             <Form.Text muted className="text-start">
-                            Must be more 0
+                            Must be more than 0
                             </Form.Text>
                             <Form.Control.Feedback type="invalid">
                                 Price not correct!

@@ -18,7 +18,6 @@ import twit from '../file/twitter.svg'
 import tele from '../file/telegram.svg'
 
 export const Main = () => {
-    console.log(typeof window.ethereum)
     return <div className="bg-dark">
         <Navbar />
         <div className='d-flex justify-content-center flex-wrap mb-lg-5'>
@@ -27,7 +26,6 @@ export const Main = () => {
                     <h1 className='text-white'>Create, sell and enjoy NFT memes</h1>
                     <h5 className='text-secondary mb-3'>MemeZzz is the world's first NFT memes marketplace in the telegram channel</h5>
                     <div className='d-flex'>
-                        <div className="nav-link" to="/create"><button className='btn btn-outline-warning'>Marketplace</button></div>
                         <Link className="nav-link" to="/create"><button className='btn btn-success ms-2'>Create NFT</button></Link>
                     </div>
                 </div>
@@ -100,7 +98,6 @@ export const Main = () => {
                     <img src={twit} alt="hive" style={{ width: "40%" }} />
                 </a>
             </div>
-            <p className='text-secondary fs-5'>Subscribe</p>
             <div className='col-2 col-md-1'>
                 <a target="_blank"
                     rel='noreferrer'

@@ -68,7 +68,7 @@ export const Navbar = () => {
                                     My profile
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu>
-                                    <Dropdown.Item onClick={()=>navigate('/profile')}>My NFT</Dropdown.Item>
+                                    <Dropdown.Item onClick={()=>navigate('/profile')}>My NFTs</Dropdown.Item>
                                     <Dropdown.Item onClick={()=>dispatch(logout())}>Sign out</Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>

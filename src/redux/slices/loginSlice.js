@@ -49,7 +49,6 @@ export const getUserNftWaves = createAsyncThunk('waves/getUserNft',
 
             }
             const data = await response.json()
-            console.log(data)
             return data;
         } catch (error) {
             return rejectWithValue(error)
@@ -59,7 +58,6 @@ export const getUserNftWaves = createAsyncThunk('waves/getUserNft',
 
 export const pickupNftWaves = createAsyncThunk('waves/pickupNft',
     async function ({ id, id_asset }, { rejectWithValue }) {
-        console.log(id_asset, id)
         try {
             const data = {
                 dApp: '3N4bt53eU7kwBbhAkh2KFYajCc1kAtu9TY8',
@@ -92,7 +90,6 @@ export const pickupNftWaves = createAsyncThunk('waves/pickupNft',
 
 export const changeNftWaves = createAsyncThunk('waves/changeNft',
     async function ({ id, id_asset, isTradable, price }, { rejectWithValue }) {
-        console.log(id, id_asset, isTradable, price)
         try {
             const data = {
                 dApp: '3N4bt53eU7kwBbhAkh2KFYajCc1kAtu9TY8',
@@ -119,7 +116,6 @@ export const changeNftWaves = createAsyncThunk('waves/changeNft',
             for (let key in item) {
                 form_data.append(key, item[key]);
             }
-            console.log(item)
             const res = await fetch(`${url}/change-nft/${id}`, {
                 method: 'POST',
                 body: form_data,
@@ -218,7 +214,6 @@ export const loginSlice = createSlice({
             console.log('starttttttttttt')
         },
         [changeNftWaves.fulfilled]: (state, action) => {
-            console.log('111111111111111111111111')
             state.userNft = state.userNft.map(item => item.id === action.payload.id ? action.payload : item)
         },
         [changeNftWaves.rejected]: (state, action) => {

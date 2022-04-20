@@ -45,7 +45,6 @@ export const GenerateMeme = ({ stageRef }) => {
     const _onChange = async (file) => {
         const { src, w, h } = await fileToDataUri(file)
         dispatch(chooseMeme({ url: src, width: w, height: h }))
-        console.log(src)
     }
 
     const closeM = (image) => {
@@ -82,7 +81,7 @@ export const GenerateMeme = ({ stageRef }) => {
             <div className="col-11 col-sm-4">
                     <label className="btn btn-primary m-1">
                         <input className="d-none" type="file" onChange={(e) => _onChange(e.target.files[0])} />
-                        Upload image from device
+                        Upload image
                     </label>
                     <button type="button" className="btn btn-primary m-1" onClick={() => setLgShow(true)}>Сhoose a template</button>
                 {textOptions.map((el, index) => <div key={index}>

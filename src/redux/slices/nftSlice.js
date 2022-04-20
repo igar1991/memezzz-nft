@@ -45,7 +45,6 @@ export const sendNftWaves = createAsyncThunk('nft/sendNftWaves',
         for (let key in item) {
             form_data.append(key, item[key]);
         }
-        console.log(item)
         try {
             const response = await fetch(`${url}/new-nft/`, {
                 method: 'POST',
@@ -101,8 +100,6 @@ export const buyNftWaves = createAsyncThunk('nft/buyNftWaves',
     async function ({ id, id_asset, price, newprice, tradable, id_post }, { rejectWithValue }) {
         try {
             const trade = tradable === '1' ? true : false
-            console.log(id, id_asset, price, newprice, tradable)
-            console.log(id, id_asset, +(price*1.05*100000000).toFixed(0), +newprice*100000000, trade)
             const data = {
                 dApp: '3N4bt53eU7kwBbhAkh2KFYajCc1kAtu9TY8',
                 fee: 500000,
@@ -123,14 +120,12 @@ export const buyNftWaves = createAsyncThunk('nft/buyNftWaves',
               const [tx] = await signer
                 .invoke(data)
                 .broadcast();
-                console.log(tx.sender)
                 let form_data = new URLSearchParams();
                 const item = {
                     owner: tx.sender,
                     price: newprice,
                     public: tradable,
                 }
-                console.log(item)
                 for (let key in item) {
                     form_data.append(key, item[key]);
                 }

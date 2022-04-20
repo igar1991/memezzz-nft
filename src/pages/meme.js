@@ -93,6 +93,7 @@ export const Meme = () => {
                                     required
                                     id="price"
                                     type="number"
+                                    step="0.1"
                                     maxLength={8}
                                     value={currentPrice}
                                     onChange={(e) => setCurrentPrice(e.target.value)}
@@ -100,7 +101,7 @@ export const Meme = () => {
                                     disabled={!(radioValue === '1')}
                                 />
                                 <Form.Text muted>
-                                    Must be more 0
+                                    Must be more than 0
                                 </Form.Text>
                                 <Form.Control.Feedback type="invalid">
                                     Price not correct!

@@ -19,7 +19,7 @@ export const Profile = () => {
         <Navbar />
         <div className="bg-dark text-warning m-2 p-3" style={{ minHeight: "90vh" }}>
             <div className='d-flex justify-content-between'>
-            <h1>Your NFT Memes</h1>
+            <h1>My NFT Memes</h1>
             <div className='p-1'>
             <button onClick={() => dispatch(getUserNftWaves(userAdress))} className="btn btn-outline-success" type="button">Refresh</button>
             </div>
@@ -27,7 +27,7 @@ export const Profile = () => {
             <hr className="bg-warning" />
             <div className='d-flex flex-wrap'>
                 {userNft && userNft.length === 0 && userAdress !== null && <div className='ms-auto me-auto d-grid'>
-                    <h2>You don't have NFT yet :(</h2>
+                    <h2>You don't have NFTs yet :(</h2>
                 </div>}
                 {userAdress === null && <div className="alert alert-danger mt-2 ms-auto me-auto" role="alert">
                     <AlertFillIcon verticalAlign="middle" size={12} />Login please.
