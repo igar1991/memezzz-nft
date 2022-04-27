@@ -49,6 +49,9 @@ export const mainSlice = createSlice({
     },
      changeText: (state, action)=>{
          state.textOptions = action.payload
+     },
+     clearMeme: (state, action)=>{
+         state.currentMeme = null
      }
     },
     extraReducers: {
@@ -69,6 +72,6 @@ export const mainSlice = createSlice({
     }
 })
 
-export const {chooseMeme, postWidth, postHeight, changeText } = mainSlice.actions
+export const {chooseMeme, postWidth, postHeight, changeText, clearMeme } = mainSlice.actions
 
 export default mainSlice.reducer

@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeText, chooseMeme, postHeight, postWidth } from '../redux/slices/mainSlice';
+import { changeText, chooseMeme, postHeight, postWidth, clearMeme } from '../redux/slices/mainSlice';
 import { Stage, Layer, Text } from 'react-konva';
-import { Modal, Form } from "react-bootstrap";
+import { Modal, Form, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { Newmeme } from '../components/newmeme';
 import { MemeImage } from '../components/memeImage';
 
 export const GenerateMeme = ({ stageRef }) => {
 
     const dispatch = useDispatch()
-    const { currentMeme, textOptions, widthCanvas, heightCanvas  } = useSelector(state => state.main)
+    const { currentMeme, textOptions, widthCanvas, heightCanvas } = useSelector(state => state.main)
 
     const [lgShow, setLgShow] = useState(false)
 
@@ -23,10 +23,16 @@ export const GenerateMeme = ({ stageRef }) => {
         if (currentMeme) {
             const h = currentMeme.height * widthCanvas / currentMeme.width
             dispatch(postHeight(Math.round(Number(h))))
-            
+
         }
 
-    }, [ widthCanvas, currentMeme, dispatch ])
+    }, [widthCanvas, currentMeme, dispatch])
+
+    useEffect(()=>{
+        return ()=>{
+            dispatch(clearMeme())
+        }
+    },[dispatch])
 
 
     const fileToDataUri = (file) => new Promise((resolve, reject) => {
@@ -48,7 +54,7 @@ export const GenerateMeme = ({ stageRef }) => {
     }
 
     const closeM = (image) => {
-        dispatch(chooseMeme({url: image.path, width: image.width, height: image.height}))
+        dispatch(chooseMeme({ url: image.path, width: image.width, height: image.height }))
         setLgShow(false)
     }
 
@@ -78,12 +84,17 @@ export const GenerateMeme = ({ stageRef }) => {
                     </Layer>
                 </Stage>}
             </div>
-            <div className="col-11 col-sm-4">
-                    <label className="btn btn-primary m-1">
-                        <input className="d-none" type="file" onChange={(e) => _onChange(e.target.files[0])} />
-                        Upload image
-                    </label>
+            <div className="col-sm-11 col-lg-4 col-md-11">
+                <label className="btn btn-primary m-1">
+                    <input className="d-none" type="file" onChange={(e) => _onChange(e.target.files[0])} />
+                    Upload image
+                </label>
+                <OverlayTrigger
+                    placement="top"
+                    overlay={<Tooltip id="button-tooltip-1">Нou can use our unique templates.</Tooltip>}
+                >
                     <button type="button" className="btn btn-primary m-1" onClick={() => setLgShow(true)}>Сhoose a template</button>
+                </OverlayTrigger>
                 {textOptions.map((el, index) => <div key={index}>
                     <input
                         disabled={!currentMeme}
@@ -92,7 +103,7 @@ export const GenerateMeme = ({ stageRef }) => {
                         name="topText"
                         placeholder="Text"
                         value={el.text}
-                        onChange={(e) =>  dispatch(changeText(textOptions.map((item) => item.id === el.id ? { ...item, text: e.target.value } : item)))}
+                        onChange={(e) => dispatch(changeText(textOptions.map((item) => item.id === el.id ? { ...item, text: e.target.value } : item)))}
                     />
                     <div className="d-flex align-items-center">
                         <Form.Label className="col-3">Font: {el.fontsize}px</Form.Label >

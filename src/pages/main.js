@@ -26,7 +26,7 @@ export const Main = () => {
                     <h1 className='text-white'>Create, sell and enjoy NFT memes</h1>
                     <h5 className='text-secondary mb-3'>MemeZzz is the world's first NFT memes marketplace in the telegram channel</h5>
                     <div className='d-flex'>
-                        <Link className="nav-link" to="/create"><button className='btn btn-success ms-2'>Create NFT</button></Link>
+                        <Link className="nav-link" to="/create"><button className='btn btn-success ms-2 btn-lg'>Create NFT</button></Link>
                     </div>
                 </div>
             </div>
@@ -57,9 +57,9 @@ export const Main = () => {
         <hr className="bg-warning" />
         <h1 className='text-white ms-5'>Supported networks</h1>
         <div className='d-flex mt-5 mb-5 flex-wrap justify-content-around text-center'>
-            <div className='col-6 col-md-2'>
+            {/* <div className='col-6 col-md-2'>
                 <img src={img_5} alt="hive" style={{ width: "100%" }} />
-            </div>
+            </div> */}
             <div className='col-6 col-md-2'>
                 <img src={img_6} alt="hive" style={{ width: "100%" }} />
             </div>

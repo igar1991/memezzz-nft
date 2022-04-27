@@ -24,8 +24,9 @@ export const Admin = () => {
         </div>
         {allNft.map((item, index) => {
           return (
+            
             <div className="d-flex text-warning" key={index.toString()}>
-              <div className='col-4 border border-white'>
+              {item.url.includes('gateway.ethswarm.org/bzz/') && <><div className='col-4 border border-white'>
                 <img src={item.url} alt='meme' style={{ maxWidth: '100%', objectFit: 'contain' }} />
               </div>
               <div className='col-4 border border-white p-1'>
@@ -45,7 +46,7 @@ export const Admin = () => {
                 <p className={`text-${item.status === 'start' ? 'success' : 'danger'} fs-4`}>{item.status}</p>
                 <button onClick={() => dispatch(mintNftAdmin(item.id))} className='btn btn-block btn-success m-1'>Create NFT</button>
                 <button onClick={() => dispatch(rejectNftAdmin(item.id))} className='btn btn-block btn-danger m-1'>Reject</button>
-              </div>
+              </div></>}
             </div>
           )
         })}

@@ -41,6 +41,7 @@ export const uploadNft = createAsyncThunk('nft/uploadNft',
 
 export const sendNftWaves = createAsyncThunk('nft/sendNftWaves',
     async function (item, { rejectWithValue }) {
+        console.log(item)
         let form_data = new URLSearchParams();
         for (let key in item) {
             form_data.append(key, item[key]);
@@ -201,6 +202,7 @@ export const nftSlice = createSlice({
         },
         [sendNftWaves.fulfilled]: (state, action) => {
             state.status = "complit"
+            console.log(action.payload)
         },
         [sendNftWaves.rejected]: (state, action) => {
             state.status = "error"

@@ -58,7 +58,7 @@ export const Navbar = () => {
                             <Link className="nav-link" to="/create">Create NFT</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/about">About Swarm</Link>
+                            <Link className="nav-link" to="/about">About Tech</Link>
                         </li>
                     </ul>
                     <div className="d-flex">

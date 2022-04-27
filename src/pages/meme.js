@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from "react-router"
 import { getOneNft } from '../redux/slices/onenftSlice';
 import { buyNftWaves } from '../redux/slices/nftSlice';
-import { ButtonGroup, ToggleButton, Form } from "react-bootstrap";
+import { ButtonGroup, ToggleButton, Form, OverlayTrigger, Tooltip } from "react-bootstrap";
 
 
 
@@ -64,6 +64,10 @@ export const Meme = () => {
                             <h5>Price:</h5>
                             <p className="text-white">{(Number(nftData.price) * 1.05).toFixed(2)}</p>
                             <ButtonGroup className="col-4">
+                            <OverlayTrigger
+                                        placement="left"
+                                        overlay={<Tooltip id="button-tooltip-1">Your NFT will be published on the marketplace.</Tooltip>}
+                                    >
                                 <ToggleButton
                                     id='1'
                                     type="radio"
@@ -75,6 +79,11 @@ export const Meme = () => {
                                 >
                                     Public
                                 </ToggleButton>
+                                </OverlayTrigger>
+                                <OverlayTrigger
+                                        placement="left"
+                                        overlay={<Tooltip id="button-tooltip-1">Your NFT will be NOT published on the marketplace.</Tooltip>}
+                                    >
                                 <ToggleButton
                                     id='0'
                                     type="radio"
@@ -86,6 +95,7 @@ export const Meme = () => {
                                 >
                                     Private
                                 </ToggleButton>
+                                </OverlayTrigger>
                             </ButtonGroup>
                             <div className='col-8'>
                                 <Form.Label className="text-primary mt-1">Price in Waves</Form.Label>
@@ -94,6 +104,7 @@ export const Meme = () => {
                                     id="price"
                                     type="number"
                                     step="0.1"
+                                    min="0.1"
                                     maxLength={8}
                                     value={currentPrice}
                                     onChange={(e) => setCurrentPrice(e.target.value)}
@@ -108,7 +119,7 @@ export const Meme = () => {
                                 </Form.Control.Feedback>
                             </div>
                             <div className="d-grid gap-2 mt-1">
-                                <button onClick={() => Buyfunc(nftData.id, nftData.id_asset, nftData.price, currentPrice, radioValue)} className="btn btn-success" type="button">{radioValue === '1' ? 'Buy and publish' : 'Buy'}</button>
+                                <button onClick={() => Buyfunc(nftData.id, nftData.id_asset, nftData.price, currentPrice, radioValue)} className="btn btn-success" type="button">{'Buy'}</button>
                             </div>
                         </>}
                     </div>
