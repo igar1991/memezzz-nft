@@ -101,7 +101,7 @@ export const Main = () => {
             <div className='col-2 col-md-1'>
                 <a target="_blank"
                     rel='noreferrer'
-                    href="https://t.me/memezzz_nft">
+                    href={process.env.REACT_APP_WAVES_TELEGRAM}>
                     <img src={tele} alt="hive" style={{ width: "40%" }} />
                 </a>
             </div>

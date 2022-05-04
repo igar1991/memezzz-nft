@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-//const url = 'http://localhost:3007'
-const url = 'https://api-memez.testeron.pro'
+const url = process.env.REACT_APP_API_LINK;
+//'http://localhost:3007'
+//'https://api-memez.testeron.pro'
 
 export const getNft = createAsyncThunk('admin/getNft',
     async function (_, { rejectWithValue }) {

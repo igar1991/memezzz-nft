@@ -47,7 +47,7 @@ export const Create = () => {
         setCaptcha(false)
         setCaptchaValue(value)
     }
-
+    
     const titleValid = () => {
         if (title.length < 4) {
             setTitleV(false)

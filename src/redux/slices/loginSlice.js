@@ -3,17 +3,15 @@ import { Signer } from '@waves/signer';
 import { ProviderKeeper } from '@waves/provider-keeper';
 const { providers } = require('ethers');
 
-//const url = 'http://localhost:3007'
-const url = 'https://api-memez.testeron.pro'
+const url = process.env.REACT_APP_API_LINK;
 
 const signer = new Signer({
-    // Specify URL of the node on Testnet
-    NODE_URL: 'https://nodes-testnet.wavesnodes.com',
+    NODE_URL: process.env.REACT_APP_WAVES_NODE_URL,
 });
   const keeper = new ProviderKeeper();
-signer.setProvider(keeper)
+  signer.setProvider(keeper)
 
-
+console.log(process.env.REACT_APP_WAVES_NODE_URL)
 
 export const getAdressMeta = createAsyncThunk('meta/getAdress',
     async function (_, { rejectWithValue }) {
@@ -60,7 +58,7 @@ export const pickupNftWaves = createAsyncThunk('waves/pickupNft',
     async function ({ id, id_asset }, { rejectWithValue }) {
         try {
             const data = {
-                dApp: '3N4bt53eU7kwBbhAkh2KFYajCc1kAtu9TY8',
+                dApp: process.env.REACT_APP_WAVES_DAPP_ADRESS,
                 fee: 500000,
                 chainId: 84,
                 call: {
@@ -92,7 +90,7 @@ export const changeNftWaves = createAsyncThunk('waves/changeNft',
     async function ({ id, id_asset, isTradable, price }, { rejectWithValue }) {
         try {
             const data = {
-                dApp: '3N4bt53eU7kwBbhAkh2KFYajCc1kAtu9TY8',
+                dApp: process.env.REACT_APP_WAVES_DAPP_ADRESS,
                 fee: 500000,
                 chainId: 84,
                 call: {

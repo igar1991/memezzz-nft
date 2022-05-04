@@ -6,16 +6,15 @@ import { ProviderKeeper } from '@waves/provider-keeper';
 
 const { providers } = require('ethers');
 const bee = new Bee('https://gateway-proxy-bee-8-0.gateway.ethswarm.org');
-//const url = 'http://localhost:3007';
-const url = 'https://api-memez.testeron.pro'
+const url = process.env.REACT_APP_API_LINK;
 
 const signer = new Signer({
     // Specify URL of the node on Testnet
-    NODE_URL: 'https://nodes-testnet.wavesnodes.com',
-  });
-  const keeper = new ProviderKeeper();
-  signer.setProvider(keeper)
-  
+    NODE_URL: process.env.REACT_APP_WAVES_NODE_URL,
+});
+const keeper = new ProviderKeeper();
+signer.setProvider(keeper)
+
 
 
 
@@ -58,7 +57,7 @@ export const sendNftWaves = createAsyncThunk('nft/sendNftWaves',
 
         } catch (error) {
             return rejectWithValue(error)
-            
+
         }
     }
 )
@@ -102,42 +101,45 @@ export const buyNftWaves = createAsyncThunk('nft/buyNftWaves',
         try {
             const trade = tradable === '1' ? true : false
             const data = {
-                dApp: '3N4bt53eU7kwBbhAkh2KFYajCc1kAtu9TY8',
+                dApp: process.env.REACT_APP_WAVES_DAPP_ADRESS,
                 fee: 500000,
                 chainId: 84,
                 payment: [{
                     assetId: "WAVES",
-                    amount: (+price*1.05*100000000).toFixed(0),
-                  }],
+                    amount: (+price * 1.05 * 100000000).toFixed(0),
+                }],
                 call: {
-                  function: 'buy',
-                  args: [
-                    { type: 'string', value: id_asset },
-                    { type: 'boolean', value: trade },
-                    { type: 'integer', value: (+newprice*100000000).toFixed(0) },
-                  ],
+                    function: 'buy',
+                    args: [
+                        { type: 'string', value: id_asset },
+                        { type: 'boolean', value: trade },
+                        { type: 'integer', value: (+newprice * 100000000).toFixed(0) },
+                    ],
                 },
-              }
-              const [tx] = await signer
+            }
+            const [tx] = await signer
                 .invoke(data)
                 .broadcast();
-                let form_data = new URLSearchParams();
-                const item = {
-                    owner: tx.sender,
-                    price: newprice,
-                    public: tradable,
+            const conf = await signer.waitTxConfirm(tx, 1)
+            let form_data = new URLSearchParams();
+            const item = {
+                owner: conf.sender,
+                price: newprice,
+                public: tradable,
+            }
+            for (let key in item) {
+                form_data.append(key, item[key]);
+            }
+            console.log(conf)
+            await fetch(`${url}/buy-nft/${id}`, {
+                method: 'POST',
+                body: form_data,
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
                 }
-                for (let key in item) {
-                    form_data.append(key, item[key]);
-                }
-                const response = await fetch(`${url}/buy-nft/${id}`, {
-                    method: 'POST',
-                    body: form_data,
-                    mode: 'no-cors',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    }
-                })
+            })
+
 
         } catch (error) {
             return rejectWithValue(error)

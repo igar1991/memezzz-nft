@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-//const url = 'http://localhost:3007'
-const url = 'https://api-memez.testeron.pro'
+const url = process.env.REACT_APP_API_LINK;
 
 export const getOneNft = createAsyncThunk('onenft/getOneNft',
     async function (id, { rejectWithValue }) {
@@ -33,22 +32,16 @@ export const onenftSlice = createSlice({
     extraReducers: {
         [getOneNft.pending]: (state) => {
             state.status = "load"
-            console.log("Нyчалачь загрузка")
         },
         [getOneNft.fulfilled]: (state, action) => {
             state.status = "complit"
             state.nftData = action.payload
-            console.log("загрузка закончена")
         },
         [getOneNft.rejected]: (state, action) => {
             state.status = "error"
-            console.log("Errorrr")
             state.error = action.payload
-        },
-
+        }
     }
 })
-
-//export const {} = mainSlice.actions
 
 export default onenftSlice.reducer
