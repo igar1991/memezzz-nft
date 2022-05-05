@@ -3,9 +3,9 @@ import { Navbar } from '../components/navbar';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from "react-router"
 import { getOneNft } from '../redux/slices/onenftSlice';
-import { buyNftWaves } from '../redux/slices/nftSlice';
-import { ButtonGroup, ToggleButton, Form, OverlayTrigger, Tooltip } from "react-bootstrap";
-import { getAdressWaves, modalisMeta } from '../redux/slices/loginSlice';
+import { buyNftWaves, openModalBuying } from '../redux/slices/nftSlice';
+import { ButtonGroup, ToggleButton, Form, OverlayTrigger, Tooltip, Modal } from "react-bootstrap";
+import { modalisMeta } from '../redux/slices/loginSlice';
 import { AlertFillIcon } from '@primer/octicons-react';
 
 
@@ -14,30 +14,29 @@ export const Meme = () => {
     let { id } = useParams();
     const dispatch = useDispatch()
     const { nftData } = useSelector(state => state.onenft)
+    const { userAdress } = useSelector(state => state.login)
+    const { statusBuying, modalBuying } = useSelector(state => state.nft)
 
     const [currentPrice, setCurrentPrice] = useState(2);
     const [radioValue, setRadioValue] = useState('1');
     const [priceV, setPriceV] = useState(false);
+    const url = process.env.REACT_APP_WAVES_EXPLORER_LINK;
+
+    const [keeper, setKeeper] = useState(false)
+
+
 
 
     useEffect(() => {
         dispatch(getOneNft(id))
     }, [dispatch, id])
 
-    const url = process.env.REACT_APP_WAVES_EXPLORER_LINK;
-
-    const [keeper, setKeeper] = useState(false)
-
-    const { userAdress } = useSelector(state => state.login)
-
-    const loginWaves = () => {
-        if (window.WavesKeeper) {
-            dispatch(getAdressWaves())
-            dispatch(modalisMeta(false))
-        } else {
-            setKeeper(true)
+    useEffect(() => {
+        if(statusBuying === 'pending') {
+            dispatch(openModalBuying(true))
         }
-    }
+    }, [dispatch, statusBuying])
+
 
     const Buyfunc = (id, id_asset, price, newprice, tradable) => {
         if (newprice <= 0 && tradable === '1') {
@@ -146,7 +145,7 @@ export const Meme = () => {
                                         onClick={() => Buyfunc(nftData.id, nftData.id_asset, nftData.price, currentPrice, radioValue)} 
                                         className="btn btn-success" 
                                         type="button"
-                                        disabled={userAdress === nftData.owner}
+                                        disabled={userAdress === nftData.owner || statusBuying === 'pending'}
                                         >
                                         Buy
                                     </button>
@@ -160,6 +159,33 @@ export const Meme = () => {
                     </div>
                 </div>}
             </div>
+            <Modal
+                    size="md"
+                    show={modalBuying}
+                    onHide={() => dispatch(openModalBuying(false))}
+                    backdrop={false}
+
+                >
+                    <Modal.Header closeButton className='bg-dark text-white'>
+                        <Modal.Title className="text-warning">
+                           But NFT
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body className='bg-dark text-center text-white'>
+                        {statusBuying === 'complit' && <div>
+                            <p>The purchase was successful. All NFTs can be found in our<a rel='noreferrer'
+                                href="https://t.me/nftmemez" className="alert-link" target="_blank"> the telegram channel.</a></p>
+
+                        </div>}
+                        {statusBuying === 'error' &&
+                            <><h3 className='text-dangerous'>Error :(</h3></>}
+                                {statusBuying === 'pending' &&
+                            <><h3 className='text-warning'>Buying...</h3>
+                                <div className="spinner-border text-warning" role="status">
+                                    <span className="visually-hidden">Loading...</span>
+                                </div></>}        
+                    </Modal.Body>
+                </Modal>
         </div>
 
     </>

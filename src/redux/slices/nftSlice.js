@@ -40,7 +40,6 @@ export const uploadNft = createAsyncThunk('nft/uploadNft',
 
 export const sendNftWaves = createAsyncThunk('nft/sendNftWaves',
     async function (item, { rejectWithValue }) {
-        console.log(item)
         let form_data = new URLSearchParams();
         for (let key in item) {
             form_data.append(key, item[key]);
@@ -130,8 +129,7 @@ export const buyNftWaves = createAsyncThunk('nft/buyNftWaves',
             for (let key in item) {
                 form_data.append(key, item[key]);
             }
-            console.log(conf)
-            await fetch(`${url}/buy-nft/${id}`, {
+            const result = await fetch(`${url}/buy-nft/${id}`, {
                 method: 'POST',
                 body: form_data,
                 mode: 'no-cors',
@@ -139,6 +137,8 @@ export const buyNftWaves = createAsyncThunk('nft/buyNftWaves',
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             })
+
+            return result;
 
 
         } catch (error) {
@@ -157,11 +157,16 @@ export const nftSlice = createSlice({
         statusUpload: "start",
         statusUser: "start",
         error: null,
-        userMemes: null
+        userMemes: null,
+        statusBuying: 'start',
+        modalBuying: false
     },
     reducers: {
         openModalNft: (state, action) => {
             state.modalNft = action.payload
+        },
+        openModalBuying: (state, action) => {
+            state.modalBuying = action.payload
         },
         clearMeta: (state) => {
             state.metaUrl = null
@@ -211,15 +216,18 @@ export const nftSlice = createSlice({
             state.error = action.payload
         },
         [buyNftWaves.pending]: (state) => {
+            state.statusBuying = 'pending'
         },
         [buyNftWaves.fulfilled]: (state, action) => {
+            state.statusBuying = 'complit'
         },
         [buyNftWaves.rejected]: (state, action) => {
             state.error = action.payload
+            state.statusBuying = 'error'
         }
     }
 })
 
-export const { clearMeta, openModalNft } = nftSlice.actions
+export const { clearMeta, openModalNft, openModalBuying } = nftSlice.actions
 
 export default nftSlice.reducer
