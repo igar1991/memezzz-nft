@@ -50,8 +50,17 @@ export const mainSlice = createSlice({
      changeText: (state, action)=>{
          state.textOptions = action.payload
      },
-     clearMeme: (state, action)=>{
+     clearMeme: (state)=>{
          state.currentMeme = null
+         state.textOptions = [{
+            id: 0,
+            isDragging: false,
+            x: 50,
+            y: 50,
+            fontsize: 40,
+            text: '',
+            fontcolor: '#000000'
+        }]
      }
     },
     extraReducers: {

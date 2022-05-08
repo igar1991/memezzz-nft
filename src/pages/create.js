@@ -8,7 +8,8 @@ import { Modal, ButtonGroup, ToggleButton, Form, OverlayTrigger, Tooltip } from 
 import { Link } from 'react-router-dom';
 import { AlertFillIcon } from '@primer/octicons-react';
 import ReCAPTCHA from "react-google-recaptcha";
-import { chooseMeme } from '../redux/slices/mainSlice';
+import { clearMeme } from '../redux/slices/mainSlice';
+import { modalisMeta } from '../redux/slices/loginSlice';
 
 
 
@@ -119,7 +120,7 @@ export const Create = () => {
         setPriceV(false)
         setTitleV(false)
         setCaptcha(true)
-        dispatch(chooseMeme(null))
+        dispatch(clearMeme())
     }
 
     const createGo = () => {
@@ -182,11 +183,13 @@ export const Create = () => {
                 <hr />
                 {currentMeme &&
                     <div className="d-flex flex-column justify-content-end align-content-end align-items-center">
-                        {
-                            userAdress === null &&
-                            <div className="alert alert-danger mt-2" role="alert">
-                                <AlertFillIcon verticalAlign="middle" size={12} />For create NFT, login please.
-                            </div>}
+                        {userAdress === null && <>                            
+                        <div className="alert alert-danger mt-2" role="alert">
+                            <AlertFillIcon verticalAlign="middle" size={12} /> For create NFT, login please.
+                        </div>
+                        <button className="btn btn-warning fw-bold col-2" onClick={() => dispatch(modalisMeta(true))}>
+                            Log in
+                        </button></>}
                         {nameBlockchain === "waves" &&
                             <div className="mt-2 d-flex flex-column align-items-center col-12 col-md-6">
                                 <ButtonGroup className="col-4">
@@ -240,7 +243,7 @@ export const Create = () => {
                                         Must be 4-16 characters
                                     </Form.Text>
                                     <Form.Control.Feedback type="invalid">
-                                        Title not correct!
+                                        Title is not correct
                                     </Form.Control.Feedback>
                                 </div>
                                 <div className='col-8'>
@@ -259,10 +262,10 @@ export const Create = () => {
                                         onBlur={() => priceValid()}
                                     />
                                     <Form.Text muted>
-                                        Must be than more 0
+                                        Must be more than 0
                                     </Form.Text>
                                     <Form.Control.Feedback type="invalid">
-                                        Price not correct!
+                                        Price is not correct
                                     </Form.Control.Feedback>
                                 </div>
                             </div>}

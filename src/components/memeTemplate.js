@@ -70,9 +70,9 @@ export const MemeTemplate = ({ id }) => {
                 <div className="card-body text-start">
                     <h5 className="card-title text-warning">{state.title}</h5>
                     <p className={`card-text text-${state.status === 'moderation' ? 'primary' : (state.status === 'minted' ? 'success' : 'danger')}`}>Moderation status: {state.status}</p>
-                    {state.status === 'minted' && <>
-                        <hr />
+                    <hr />
                         {Number(state.public)===1&&<p className='card-text text-primary'>{`Price: ${state.price} waves`}</p>}
+                    {state.status === 'minted' && <>
                         {Number(state.public)===1?<p className='card-text text-warning'>Public</p>: <p className='card-text text-danger'>Private</p>}
                         <button onClick={()=>setPick(true)} className="btn btn-outline-success" type="button">Pick up</button>
                         <button onClick={() => setChange(true)} className="btn btn-outline-warning ms-1" type="button">Change info</button>
@@ -168,7 +168,7 @@ export const MemeTemplate = ({ id }) => {
                             Must be more than 0
                             </Form.Text>
                             <Form.Control.Feedback type="invalid">
-                                Price not correct!
+                                Price is not correct
                             </Form.Control.Feedback>
                             <button onClick={() => changeInfo(id, state.id_asset, radioValue, currentPrice)} className="btn btn-warning ms-1 mt-1" type="button">Change info</button>
                 </Modal.Body>

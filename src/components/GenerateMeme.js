@@ -85,15 +85,20 @@ export const GenerateMeme = ({ stageRef }) => {
                 </Stage>}
             </div>
             <div className="col-sm-11 col-lg-4 col-md-11">
+            <OverlayTrigger
+                    placement="top"
+                    overlay={<Tooltip id="button-tooltip-1">You can use our unique templates.</Tooltip>}
+                >
+                    <button type="button" className="btn btn-primary m-1" onClick={() => setLgShow(true)}>Сhoose a template</button>
+                </OverlayTrigger>
+                <OverlayTrigger
+                    placement="top"
+                    overlay={<Tooltip id="button-tooltip-1">You can use your images.</Tooltip>}
+                >
                 <label className="btn btn-primary m-1">
                     <input className="d-none" type="file" onChange={(e) => _onChange(e.target.files[0])} />
                     Upload image
                 </label>
-                <OverlayTrigger
-                    placement="top"
-                    overlay={<Tooltip id="button-tooltip-1">Нou can use our unique templates.</Tooltip>}
-                >
-                    <button type="button" className="btn btn-primary m-1" onClick={() => setLgShow(true)}>Сhoose a template</button>
                 </OverlayTrigger>
                 {textOptions.map((el, index) => <div key={index}>
                     <input
