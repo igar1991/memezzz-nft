@@ -174,7 +174,7 @@ export const Meme = () => {
                     <Modal.Body className='bg-dark text-center text-white'>
                         {statusBuying === 'complit' && <div>
                             <p>The purchase was successful. All NFTs can be found in our<a rel='noreferrer'
-                                href="https://t.me/nftmemez" className="alert-link" target="_blank"> the telegram channel.</a></p>
+                                href={process.env.REACT_APP_WAVES_TELEGRAM} className="alert-link" target="_blank"> the telegram channel.</a></p>
 
                         </div>}
                         {statusBuying === 'error' &&

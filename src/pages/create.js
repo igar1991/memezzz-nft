@@ -294,7 +294,7 @@ export const Create = () => {
                     <Modal.Body className='bg-dark text-center text-white'>
                         {status === 'complit' && <div>
                             {radioValue === '1' ? <p>NFT successfully created! After successful moderation, NFT will be published on<a rel='noreferrer'
-                                href="https://t.me/nftmemez" className="alert-link" target="_blank"> the telegram channel.</a></p> : <p>At the moment, only free NFT creation is available, so after moderation it will appear in your profile.</p>}
+                                href={process.env.REACT_APP_WAVES_TELEGRAM} className="alert-link" target="_blank"> the telegram channel.</a></p> : <p>At the moment, only free NFT creation is available, so after moderation it will appear in your profile.</p>}
 
                         </div>}
                         {status === 'pending' &&
