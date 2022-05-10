@@ -6,7 +6,7 @@ import { getNft, mintNftAdmin, rejectNftAdmin } from '../redux/slices/adminSlice
 export const Admin = () => {
 
   const dispatch = useDispatch()
-  const arrPublicKey = ["FNLETB7zYNDssmXXTna7TYfDHZckTguHfki3jV3AKEWt", "Dw8VJL7Q5YG7ru7xuf16N4jH8mHsTKecKELpCZCig4g5"]
+  const arrPublicKey = process.env.REACT_APP_PABLIC_KEYS
 
   const { allNft } = useSelector(state => state.admin)
   const { publicKey } = useSelector(state => state.login)
