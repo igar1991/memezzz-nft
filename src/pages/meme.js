@@ -22,10 +22,9 @@ export const Meme = () => {
     const [priceV, setPriceV] = useState(false);
     const url = process.env.REACT_APP_WAVES_EXPLORER_LINK;
 
-    const [keeper, setKeeper] = useState(false)
+    const [keeper, setKeeper] = useState(false);
 
-
-
+    const comission = Number(process.env.REACT_APP_WAVES_COMMISSION);
 
     useEffect(() => {
         dispatch(getOneNft(id))
@@ -75,7 +74,7 @@ export const Meme = () => {
                             href={`${url}${nftData.owner}`} className="alert-link" target="_blank">{nftData.owner}</a>
                         {+nftData.public === 1 && <>
                             <h5>Price:</h5>
-                            <p className="text-white">{(Number(nftData.price) * 1.05).toFixed(2)} Waves</p>
+                            <p className="text-white">{(Number(nftData.price) * process.env.REACT_APP_WAVES_COMMISSION).toFixed(2)} Waves</p>
                             {userAdress && !(userAdress === nftData.owner)
                             ?
                             <>

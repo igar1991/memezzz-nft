@@ -11,8 +11,6 @@ const signer = new Signer({
   const keeper = new ProviderKeeper();
   signer.setProvider(keeper)
 
-console.log(process.env.REACT_APP_WAVES_NODE_URL)
-
 export const getAdressMeta = createAsyncThunk('meta/getAdress',
     async function (_, { rejectWithValue }) {
         try {

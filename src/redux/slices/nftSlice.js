@@ -5,7 +5,7 @@ import { Signer } from '@waves/signer';
 import { ProviderKeeper } from '@waves/provider-keeper';
 
 const { providers } = require('ethers');
-const bee = new Bee('https://gateway-proxy-bee-8-0.gateway.ethswarm.org');
+const bee = new Bee(process.env.REACT_APP_GATEWAY_SWARM);
 const url = process.env.REACT_APP_API_LINK;
 
 const signer = new Signer({
@@ -27,7 +27,7 @@ export const uploadNft = createAsyncThunk('nft/uploadNft',
                 erc721Address: '0xc5caC9F4610fb874F54aF5B12c19Cc5fECF75469'
             });
             instance.setGatewayPostageBatchId();
-            instance.setGatewayUrlTemplate('https://gateway-proxy-bee-8-0.gateway.ethswarm.org/bzz/{reference}/')
+            instance.setGatewayUrlTemplate(`${process.env.REACT_APP_GATEWAY_SWARM}/bzz/{reference}/`)
             const result = await instance.uploadNFT(image, '.jpg', {
                 title: title,
             });
@@ -105,7 +105,7 @@ export const buyNftWaves = createAsyncThunk('nft/buyNftWaves',
                 chainId: 84,
                 payment: [{
                     assetId: "WAVES",
-                    amount: (+price * 1.05 * 100000000).toFixed(0),
+                    amount: (+price * process.env.REACT_APP_WAVES_COMMISSION * 100000000).toFixed(0),
                 }],
                 call: {
                     function: 'buy',

@@ -8,7 +8,7 @@ const { providers, Wallet } = require('ethers');
 export const getJsonFeed = createAsyncThunk('feed/getJsonFeed',
     async function (_, { rejectWithValue }) {
         try {
-            const bee = new Bee('https://bee-0.gateway.ethswarm.org');
+            const bee = new Bee(process.env.REACT_APP_GATEWAY_SWARM);
             const provider = new providers.JsonRpcProvider('https://dai.poa.network');
             const signer = new Wallet('0cc7a2ca663b8ac0d502cc993590952f0b88408bd0009c0e2708b760602e9790', provider);
             const instance = new SwarmNFT(bee, provider, signer, {

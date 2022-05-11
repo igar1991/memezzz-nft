@@ -26,7 +26,7 @@ export const Admin = () => {
           return (
             
             <div className="d-flex text-warning" key={index.toString()}>
-              {item.url.includes('gateway.ethswarm.org/bzz/') && <><div className='col-4 border border-white'>
+              {item.url.includes(process.env.REACT_APP_GATEWAY_SWARM) && <><div className='col-4 border border-white'>
                 <img src={item.url} alt='meme' style={{ maxWidth: '100%', objectFit: 'contain' }} />
               </div>
               <div className='col-4 border border-white p-1'>
