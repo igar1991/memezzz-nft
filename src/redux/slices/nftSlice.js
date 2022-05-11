@@ -3,6 +3,7 @@ import SwarmNFT from "swarm-nft/SwarmNFT.min";
 import { Bee } from "@ethersphere/bee-js";
 import { Signer } from '@waves/signer';
 import { ProviderKeeper } from '@waves/provider-keeper';
+import { getOneNft } from './onenftSlice';
 
 const { providers } = require('ethers');
 const bee = new Bee(process.env.REACT_APP_GATEWAY_SWARM);
@@ -96,7 +97,7 @@ export const createNft = createAsyncThunk('nft/createNft',
 
 
 export const buyNftWaves = createAsyncThunk('nft/buyNftWaves',
-    async function ({ id, id_asset, price, newprice, tradable, id_post }, { rejectWithValue }) {
+    async function ({ id, id_asset, price, newprice, tradable, id_post }, { rejectWithValue, dispatch }) {
         try {
             const trade = tradable === '1' ? true : false
             const data = {
@@ -129,6 +130,7 @@ export const buyNftWaves = createAsyncThunk('nft/buyNftWaves',
             for (let key in item) {
                 form_data.append(key, item[key]);
             }
+            // УДВЛИТЬ МЕТОД ФЕТЧ
             const result = await fetch(`${url}/buy-nft/${id}`, {
                 method: 'POST',
                 body: form_data,
@@ -137,10 +139,9 @@ export const buyNftWaves = createAsyncThunk('nft/buyNftWaves',
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             })
+            dispatch(getOneNft(id))
 
-            return result;
-
-
+            return result.json();
         } catch (error) {
             return rejectWithValue(error)
         }
