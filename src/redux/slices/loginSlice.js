@@ -8,8 +8,13 @@ const url = process.env.REACT_APP_API_LINK;
 const signer = new Signer({
     NODE_URL: process.env.REACT_APP_WAVES_NODE_URL,
 });
-  const keeper = new ProviderKeeper();
-  signer.setProvider(keeper)
+
+if(window.WavesKeeper) {
+    const keeper = new ProviderKeeper();
+    signer.setProvider(keeper)
+  
+}
+
 
 export const getAdressMeta = createAsyncThunk('meta/getAdress',
     async function (_, { rejectWithValue }) {
@@ -28,8 +33,29 @@ export const getAdressWaves = createAsyncThunk('waves/getAdress',
     async function (adress, { rejectWithValue }) {
         const authData = { data: "MemeZzz" }
         try {
-            const state = await window.WavesKeeper.auth(authData)
+            const state = await window.WavesKeeper.auth(authData);
+            console.log(state)
             return state
+        } catch (error) {
+            return rejectWithValue(error)
+        }
+    }
+)
+
+export const getWavesState = createAsyncThunk('waves/getWavesState',
+    async function (_, { rejectWithValue, dispatch }) {
+        try {
+            console.log('GETWAVES')
+            const state = await window.WavesKeeper.publicState();
+            console.log(state)
+            window.WavesKeeper.on('update', (item) => {
+                console.log('UPDATE')
+                dispatch(updateWavesState(item))
+                
+            })
+
+            return state;
+
         } catch (error) {
             return rejectWithValue(error)
         }
@@ -134,7 +160,8 @@ export const changeNftWaves = createAsyncThunk('waves/changeNft',
 export const loginSlice = createSlice({
     name: "waves",
     initialState: {
-        nameBlockchain: null,
+        nameBlockchain: "waves",
+        chainId: null,
         modalMeta: false,
         networkId: null,
         userAdress: null,
@@ -157,6 +184,11 @@ export const loginSlice = createSlice({
             state.networkId = null
             state.status = 'start'
             state.error = null
+        },
+        updateWavesState: (state, action)=>{
+            state.userAdress = action.payload.account.address;
+            state.chainId = action.payload.account.networkCode;
+            state.publicKey = action.payload.account.publicKey;
         }
     },
     extraReducers: {
@@ -214,10 +246,20 @@ export const loginSlice = createSlice({
         },
         [changeNftWaves.rejected]: (state, action) => {
             state.error = action.payload
+        },
+        [getWavesState.pending]: (state) => {
+        },
+        [getWavesState.fulfilled]: (state, action) => {
+            state.userAdress = action.payload?.account.address;
+            state.chainId = action.payload?.account.networkCode;
+            state.publicKey = action.payload?.account.publicKey;
+        },
+        [getWavesState.rejected]: (state, action) => {
+            state.error = action.payload
         }
     }
 })
 
-export const { getNetwork, modalisMeta, logout } = loginSlice.actions
+export const { getNetwork, modalisMeta, logout, updateWavesState } = loginSlice.actions
 
 export default loginSlice.reducer
