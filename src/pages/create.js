@@ -287,7 +287,6 @@ export const Create = () => {
                     size="md"
                     show={modalNft}
                     onHide={() => dispatch(openModalNft(false))}
-                    backdrop={false}
 
                 >
                     <Modal.Header closeButton className='bg-dark text-white'>

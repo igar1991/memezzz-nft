@@ -159,7 +159,6 @@ export const Meme = () => {
                     size="md"
                     show={modalBuying}
                     onHide={() => dispatch(openModalBuying(false))}
-                    backdrop={false}
 
                 >
                     <Modal.Header closeButton className='bg-dark text-white'>
