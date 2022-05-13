@@ -20,7 +20,6 @@ export const getAdressMeta = createAsyncThunk('meta/getAdress',
     async function (_, { rejectWithValue }) {
         try {
             const provider = new providers.Web3Provider(window.ethereum, 'any');
-
             const addresses = await provider.send("eth_requestAccounts", []);
             return addresses[0]
         } catch (error) {
@@ -30,11 +29,12 @@ export const getAdressMeta = createAsyncThunk('meta/getAdress',
 )
 
 export const getAdressWaves = createAsyncThunk('waves/getAdress',
-    async function (adress, { rejectWithValue }) {
+    async function (_, { rejectWithValue, dispatch }) {
         const authData = { data: "MemeZzz" }
         try {
             const state = await window.WavesKeeper.auth(authData);
-            console.log(state)
+            const item = await window.WavesKeeper.publicState();
+            dispatch(updateWavesState(item))
             return state
         } catch (error) {
             return rejectWithValue(error)
@@ -45,15 +45,10 @@ export const getAdressWaves = createAsyncThunk('waves/getAdress',
 export const getWavesState = createAsyncThunk('waves/getWavesState',
     async function (_, { rejectWithValue, dispatch }) {
         try {
-            console.log('GETWAVES')
             const state = await window.WavesKeeper.publicState();
-            console.log(state)
             window.WavesKeeper.on('update', (item) => {
-                console.log('UPDATE')
                 dispatch(updateWavesState(item))
-                
             })
-
             return state;
 
         } catch (error) {
@@ -180,8 +175,7 @@ export const loginSlice = createSlice({
         logout: (state) => {
             state.userAdress = null
             state.publicKey = null
-            state.nameBlockchain = null
-            state.networkId = null
+            state.chainId = null
             state.status = 'start'
             state.error = null
         },

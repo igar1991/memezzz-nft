@@ -18,6 +18,7 @@ export const About = () => {
                 <hr className="bg-warning" />
                 <p>Launched in 2016, Waves is a global open-source platform for decentralized applications. Based on proof-of-stake consensus, Waves aspires to make the most of blockchain, with minimal carbon footprint.</p>
                 <p><a href="https://waves.tech/" target="_blank" rel='noreferrer'>Waves</a> technology stack can benefit in any use cases that demand security and decentralization — open finance, personal identification, gaming, sensitive data and many others.</p>
+                <p>Address of our Dapp: <a href="https://wavesexplorer.com/address/3P9HT4feHYvKDpyCHtyiw77DjmKP9sXoez9/tx" target="_blank" rel="noreferrer">MemeZzz</a></p>
             </div>
             <div className="bg-dark p-3 text-white fs-5 mb-2">
                 <h1 className="text-warning">SWARM</h1>
