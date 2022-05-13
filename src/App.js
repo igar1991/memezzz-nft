@@ -8,14 +8,14 @@ import { Main } from './pages/main';
 import { Create } from './pages/create';
 import { About } from './pages/about';
 import { Profile } from './pages/profile';
-import { useDispatch, useSelector } from 'react-redux';
-import { getNetwork, getWavesState, updateWavesState } from './redux/slices/loginSlice';
+import { useDispatch } from 'react-redux';
+import { getWavesState } from './redux/slices/loginSlice';
 import { Admin } from './pages/admin';
 import { Meme } from './pages/meme';
 
 function App() {
   const dispatch = useDispatch()
-  const { metaInstalled, wavesState } = useSelector((state) => state.login)
+  //const { metaInstalled, wavesState } = useSelector((state) => state.login)
 
   // useEffect(() => {
   //   if (metaInstalled) {
@@ -27,7 +27,6 @@ function App() {
   // }, [dispatch, metaInstalled])
 
   useEffect(() => {
-    console.log('Effecttttttttttttttt')
     window.onload = ()=>window.WavesKeeper && dispatch(getWavesState())
     
   },[dispatch])
