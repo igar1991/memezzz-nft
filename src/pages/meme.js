@@ -16,15 +16,12 @@ export const Meme = () => {
     const { nftData } = useSelector(state => state.onenft)
     const { userAdress } = useSelector(state => state.login)
     const { statusBuying, modalBuying } = useSelector(state => state.nft)
-
     const [currentPrice, setCurrentPrice] = useState(2);
     const [radioValue, setRadioValue] = useState('1');
     const [priceV, setPriceV] = useState(false);
-    const url = process.env.REACT_APP_WAVES_EXPLORER_LINK;
-
     const [keeper, setKeeper] = useState(false);
-
     const comission = Number(process.env.REACT_APP_WAVES_COMMISSION);
+    const url = process.env.REACT_APP_WAVES_EXPLORER_LINK;
 
     useEffect(() => {
         dispatch(getOneNft(id))
@@ -74,7 +71,7 @@ export const Meme = () => {
                             href={`${url}${nftData.owner}`} className="alert-link" target="_blank">{nftData.owner}</a>
                         {+nftData.public === 1 && <>
                             <h5>Price:</h5>
-                            <p className="text-white">{(Number(nftData.price) * process.env.REACT_APP_WAVES_COMMISSION).toFixed(2)} Waves</p>
+                            <p className="text-white">{(Number(nftData.price) * comission).toFixed(2)} Waves</p>
                             {userAdress && !(userAdress === nftData.owner)
                             ?
                             <>
@@ -162,7 +159,6 @@ export const Meme = () => {
                     size="md"
                     show={modalBuying}
                     onHide={() => dispatch(openModalBuying(false))}
-                    backdrop={false}
 
                 >
                     <Modal.Header closeButton className='bg-dark text-white'>

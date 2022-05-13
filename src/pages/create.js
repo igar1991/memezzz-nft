@@ -27,7 +27,7 @@ export const Create = () => {
     const [radioValue, setRadioValue] = useState('1');
     const { currentMeme, textOptions, widthCanvas, heightCanvas } = useSelector(state => state.main)
     const { metaUrl, status, modalNft } = useSelector(state => state.nft)
-    const { userAdress, metaInstalled, networkId, nameBlockchain } = useSelector(state => state.login)
+    const { userAdress, metaInstalled, networkId, nameBlockchain, chainId } = useSelector(state => state.login)
 
     useEffect(() => {
         if (status === 'pending') {
@@ -97,6 +97,7 @@ export const Create = () => {
                     ctx.font = `${textOptions[i].fontsize * indy}px Impact`
                     ctx.fillStyle = textOptions[i].fontcolor
                     ctx.fillText(textOptions[i].text, x.toFixed(2), y.toFixed(2))
+                    ctx.strokeText(textOptions[i].text, x.toFixed(2), y.toFixed(2))
                 }
                 fetch(canvas.toDataURL())
                     .then(res => res.blob())
@@ -190,7 +191,10 @@ export const Create = () => {
                         <button className="btn btn-warning fw-bold col-2" onClick={() => dispatch(modalisMeta(true))}>
                             Log in
                         </button></>}
-                        {nameBlockchain === "waves" &&
+                        {chainId !== "W" && <div className="alert alert-danger mt-2" role="alert">
+                            <AlertFillIcon verticalAlign="middle" size={12} /> For create NFT, change network please.
+                        </div>}
+                        {chainId === "W" &&
                             <div className="mt-2 d-flex flex-column align-items-center col-12 col-md-6">
                                 <ButtonGroup className="col-4">
                                     <OverlayTrigger
@@ -283,7 +287,6 @@ export const Create = () => {
                     size="md"
                     show={modalNft}
                     onHide={() => dispatch(openModalNft(false))}
-                    backdrop={false}
 
                 >
                     <Modal.Header closeButton className='bg-dark text-white'>

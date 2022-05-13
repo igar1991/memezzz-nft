@@ -25,8 +25,9 @@ export const getNft = createAsyncThunk('admin/getNft',
 export const mintNftAdmin = createAsyncThunk('admin/mintNftAdmin',
     async function (id, { rejectWithValue }) {
         try {
-            const dataBase = window.btoa(`nft_${id}`)
-            window.WavesKeeper.signCustomData({
+            if(window.WavesKeeper) {
+                const dataBase = window.btoa(`nft_${id}`)
+                window.WavesKeeper.signCustomData({
                 version: 1,
                 binary: dataBase
             })
@@ -49,6 +50,9 @@ export const mintNftAdmin = createAsyncThunk('admin/mintNftAdmin',
                         }
                     });
                 });
+
+            }
+            
         } catch (error) {
             return rejectWithValue(error)
         }

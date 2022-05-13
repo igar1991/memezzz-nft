@@ -8,14 +8,18 @@ const url = process.env.REACT_APP_API_LINK;
 const signer = new Signer({
     NODE_URL: process.env.REACT_APP_WAVES_NODE_URL,
 });
-  const keeper = new ProviderKeeper();
-  signer.setProvider(keeper)
+
+if(window.WavesKeeper) {
+    const keeper = new ProviderKeeper();
+    signer.setProvider(keeper)
+  
+}
+
 
 export const getAdressMeta = createAsyncThunk('meta/getAdress',
     async function (_, { rejectWithValue }) {
         try {
             const provider = new providers.Web3Provider(window.ethereum, 'any');
-
             const addresses = await provider.send("eth_requestAccounts", []);
             return addresses[0]
         } catch (error) {
@@ -25,11 +29,28 @@ export const getAdressMeta = createAsyncThunk('meta/getAdress',
 )
 
 export const getAdressWaves = createAsyncThunk('waves/getAdress',
-    async function (adress, { rejectWithValue }) {
+    async function (_, { rejectWithValue, dispatch }) {
         const authData = { data: "MemeZzz" }
         try {
-            const state = await window.WavesKeeper.auth(authData)
+            const state = await window.WavesKeeper.auth(authData);
+            const item = await window.WavesKeeper.publicState();
+            dispatch(updateWavesState(item))
             return state
+        } catch (error) {
+            return rejectWithValue(error)
+        }
+    }
+)
+
+export const getWavesState = createAsyncThunk('waves/getWavesState',
+    async function (_, { rejectWithValue, dispatch }) {
+        try {
+            const state = await window.WavesKeeper.publicState();
+            window.WavesKeeper.on('update', (item) => {
+                dispatch(updateWavesState(item))
+            })
+            return state;
+
         } catch (error) {
             return rejectWithValue(error)
         }
@@ -134,7 +155,8 @@ export const changeNftWaves = createAsyncThunk('waves/changeNft',
 export const loginSlice = createSlice({
     name: "waves",
     initialState: {
-        nameBlockchain: null,
+        nameBlockchain: "waves",
+        chainId: null,
         modalMeta: false,
         networkId: null,
         userAdress: null,
@@ -153,10 +175,14 @@ export const loginSlice = createSlice({
         logout: (state) => {
             state.userAdress = null
             state.publicKey = null
-            state.nameBlockchain = null
-            state.networkId = null
+            state.chainId = null
             state.status = 'start'
             state.error = null
+        },
+        updateWavesState: (state, action)=>{
+            state.userAdress = action.payload.account.address;
+            state.chainId = action.payload.account.networkCode;
+            state.publicKey = action.payload.account.publicKey;
         }
     },
     extraReducers: {
@@ -214,10 +240,20 @@ export const loginSlice = createSlice({
         },
         [changeNftWaves.rejected]: (state, action) => {
             state.error = action.payload
+        },
+        [getWavesState.pending]: (state) => {
+        },
+        [getWavesState.fulfilled]: (state, action) => {
+            state.userAdress = action.payload?.account.address;
+            state.chainId = action.payload?.account.networkCode;
+            state.publicKey = action.payload?.account.publicKey;
+        },
+        [getWavesState.rejected]: (state, action) => {
+            state.error = action.payload
         }
     }
 })
 
-export const { getNetwork, modalisMeta, logout } = loginSlice.actions
+export const { getNetwork, modalisMeta, logout, updateWavesState } = loginSlice.actions
 
 export default loginSlice.reducer

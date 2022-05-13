@@ -70,6 +70,8 @@ export const GenerateMeme = ({ stageRef }) => {
                             text={el.text}
                             fontSize={el.fontsize}
                             fontFamily="Impact"
+                            stroke = '#000'
+                            strokeWidth = {1}
                             x={el.x}
                             y={el.y}
                             draggable
