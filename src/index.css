@@ -16,6 +16,10 @@ code {
     monospace;
 }
 
+.logo {
+  width: 80px;
+}
+
 .carousel {
   height: 250px;
 }
@@ -34,6 +38,10 @@ code {
 
 a {
   word-break: break-word;
+}
+
+.bg-black {
+  background-color: #000;
 }
 
 

@@ -4,8 +4,6 @@ import { Modal, Dropdown } from "react-bootstrap";
 import { useDispatch, useSelector } from 'react-redux';
 import { getAdressWaves, modalisMeta } from '../redux/slices/loginSlice';
 import { logout } from '../redux/slices/loginSlice';
-import logo from '../file/logo.svg';
-import logoWaves from '../file/logowaves.png';
 import {  AlertFillIcon } from '@primer/octicons-react';
 
 export const Navbar = () => {
@@ -14,7 +12,7 @@ export const Navbar = () => {
 
     const [burger, setBurger] = useState(false)
     const [keeper, setKeeper] = useState(false)
-    const [meta, setMeta] = useState(false)
+    //const [meta, setMeta] = useState(false)
 
     const { modalMeta, userAdress } = useSelector(state => state.login)
 
@@ -40,14 +38,14 @@ export const Navbar = () => {
     const onHideModal = () => {
         dispatch(modalisMeta(false))
         setKeeper(false)
-        setMeta(false)
+        //setMeta(false)
     }
 
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow">
             <div className="container-fluid">
-                <Link className="navbar-brand text-warning fs-3" to="/" style={{ fontFamily: "Impact" }}>
-                    <img src={logo} alt="logo" style={{ width: 80 }} />
+                <Link className="navbar-brand text-warning fs-3" to="/">
+                    <img className='logo' src="/file/logo.svg" alt="logo" />
                 </Link>
                 <button className="navbar-toggler" onClick={() => setBurger(!burger)}>
                     <span className="navbar-toggler-icon"></span>
@@ -56,6 +54,9 @@ export const Navbar = () => {
                     <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li className="nav-item">
                             <Link className="nav-link" to="/create">Create NFT</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/guide">Guide</Link>
                         </li>
                         <li className="nav-item">
                             <Link className="nav-link" to="/about">About Tech</Link>
@@ -103,7 +104,7 @@ export const Navbar = () => {
                         xDai
                         network</a>.</h3>} */}
                     <div onClick={loginWaves} className='logowallet position-relative d-flex shadow-lg p-3 mb-2 bg-body rounded text-center align-items-center'>
-                        <img src={logoWaves} alt="logo Metamask" className='col-2' />
+                        <img src="/file/logowaves.png" alt="logo Metamask" className='col-2' />
                         <h3 className='col-9 text-dark'>Waves Keeper</h3>
                         <p className='position-absolute bottom-0 end-0 pe-2 text-success'>Recommended</p>
                     </div>
@@ -116,10 +117,10 @@ export const Navbar = () => {
                         <h3 className='col-9 text-dark'>MetaMask</h3>
                         <p className='position-absolute bottom-0 end-0 pe-2'>Network: xDai</p>
                     </div> */}
-                    {meta && <div className="alert alert-danger mt-2" role="alert">
+                    {/* {meta && <div className="alert alert-danger mt-2" role="alert">
                         <AlertFillIcon verticalAlign="middle" size={12} /> For authorization, please, install <a rel='noreferrer'
                             href="https://metamask.io/" target="_blank" className="alert-link">MetaMask.</a>
-                    </div>}
+                    </div>} */}
                 </Modal.Body>
             </Modal>
         </nav>
