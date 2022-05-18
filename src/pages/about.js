@@ -4,7 +4,7 @@ import { Navbar } from '../components/navbar';
 export const About = () => {
     return <>
         <Navbar />
-        <div className="p-3" style={{ backgroundColor: "black", minHeight: "100vh" }}>
+        <div className="p-3 min-vh-100 bg-black">
             <div className="bg-dark p-3 text-white fs-5 mb-2">
                 <h1 className="text-warning">What are NFTs?</h1>
                 <hr className="bg-warning" />

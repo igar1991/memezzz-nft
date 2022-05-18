@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux';
 import { getWavesState } from './redux/slices/loginSlice';
 import { Admin } from './pages/admin';
 import { Meme } from './pages/meme';
+import { Guide } from './pages/guide';
 
 function App() {
   const dispatch = useDispatch()
@@ -27,8 +28,7 @@ function App() {
   // }, [dispatch, metaInstalled])
 
   useEffect(() => {
-    window.onload = ()=>window.WavesKeeper && dispatch(getWavesState())
-    
+    window.onload = ()=>window.WavesKeeper && dispatch(getWavesState());
   },[dispatch])
 
   return (
@@ -37,6 +37,7 @@ function App() {
         <Route path="/meme/:id" element={<Meme />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/pelmen" element={<Admin />} />
+        <Route path="/guide" element={<Guide />} />
         <Route path="/about" element={<About />} />
         <Route path="/create" element={<Create />} />
         <Route path="/" element={<Main />} />
