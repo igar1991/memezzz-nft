@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { Signer } from '@waves/signer';
 import { ProviderKeeper } from '@waves/provider-keeper';
-const { providers } = require('ethers');
 
 const url = process.env.REACT_APP_API_LINK;
 
@@ -14,19 +13,6 @@ if(window.WavesKeeper) {
     signer.setProvider(keeper)
   
 }
-
-
-export const getAdressMeta = createAsyncThunk('meta/getAdress',
-    async function (_, { rejectWithValue }) {
-        try {
-            const provider = new providers.Web3Provider(window.ethereum, 'any');
-            const addresses = await provider.send("eth_requestAccounts", []);
-            return addresses[0]
-        } catch (error) {
-            return rejectWithValue(error)
-        }
-    }
-)
 
 export const getAdressWaves = createAsyncThunk('waves/getAdress',
     async function (_, { rejectWithValue, dispatch }) {
@@ -186,18 +172,6 @@ export const loginSlice = createSlice({
         }
     },
     extraReducers: {
-        [getAdressMeta.pending]: (state) => {
-            state.status = 'pending'
-        },
-        [getAdressMeta.fulfilled]: (state, action) => {
-            state.userAdress = action.payload
-            state.nameBlockchain = 'ethereum'
-            state.status = 'login meta'
-        },
-        [getAdressMeta.rejected]: (state, action) => {
-            state.status = "error"
-            state.error = action.payload
-        },
         [getAdressWaves.pending]: (state) => {
             state.status = 'pending'
         },

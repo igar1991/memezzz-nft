@@ -12,7 +12,6 @@ export const Navbar = () => {
 
     const [burger, setBurger] = useState(false)
     const [keeper, setKeeper] = useState(false)
-    //const [meta, setMeta] = useState(false)
 
     const { modalMeta, userAdress } = useSelector(state => state.login)
 
@@ -24,16 +23,6 @@ export const Navbar = () => {
             setKeeper(true)
         }
     }
-
-    // const loginMeta = () => {
-    //     if (window.ethereum) {
-    //         dispatch(getAdressMeta())
-    //         dispatch(getNetwork(window.ethereum.networkVersion))
-    //         dispatch(modalisMeta(false))
-    //     } else {
-    //         setMeta(true)
-    //     }
-    // }
 
     const onHideModal = () => {
         dispatch(modalisMeta(false))
@@ -92,17 +81,6 @@ export const Navbar = () => {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body className='bg-dark text-center text-dark'>
-                    {/* {!metaInstalled && <h3>For authorization, please, install <a
-                        target="_blank"
-                        rel='noreferrer'
-                        href="https://metamask.io/">Metamask</a>.</h3>}
-                    {networkId !== 100 && <h3>Please, <a
-                        target="_blank"
-                        rel='noreferrer'
-                        href="https://www.xdaichain.com/for-users/wallets/metamask/metamask-setup">configure and switch
-                        to
-                        xDai
-                        network</a>.</h3>} */}
                     <div onClick={loginWaves} className='logowallet position-relative d-flex shadow-lg p-3 mb-2 bg-body rounded text-center align-items-center'>
                         <img src="/file/logowaves.png" alt="logo Metamask" className='col-2' />
                         <h3 className='col-9 text-dark'>Waves Keeper</h3>
@@ -112,15 +90,6 @@ export const Navbar = () => {
                         <AlertFillIcon verticalAlign="middle" size={12} /> For authorization, please, install <a rel='noreferrer'
                             href="https://docs.waves.tech/en/ecosystem/waves-keeper/getting-started-with-keeper#get-started" target="_blank" className="alert-link">Waves Keeper.</a>
                     </div>}
-                    {/* <div onClick={loginMeta} className='logowallet position-relative d-flex shadow-lg p-3 mb-2 bg-body rounded text-center align-items-center'>
-                        <img src={logoMeta} alt="logo Metamask" className='col-2' />
-                        <h3 className='col-9 text-dark'>MetaMask</h3>
-                        <p className='position-absolute bottom-0 end-0 pe-2'>Network: xDai</p>
-                    </div> */}
-                    {/* {meta && <div className="alert alert-danger mt-2" role="alert">
-                        <AlertFillIcon verticalAlign="middle" size={12} /> For authorization, please, install <a rel='noreferrer'
-                            href="https://metamask.io/" target="_blank" className="alert-link">MetaMask.</a>
-                    </div>} */}
                 </Modal.Body>
             </Modal>
         </nav>

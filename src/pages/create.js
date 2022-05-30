@@ -1,9 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Navbar } from '../components/navbar';
 import { GenerateMeme } from '../components/GenerateMeme';
-import { getAdressMeta, getNetwork } from '../redux/slices/loginSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { uploadNft, createNft, clearMeta, openModalNft, sendNftWaves } from '../redux/slices/nftSlice';
+import { uploadNft, clearMeta, openModalNft, sendNftWaves } from '../redux/slices/nftSlice';
 import { Modal, ButtonGroup, ToggleButton, Form, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { Link } from 'react-router-dom';
 import { AlertFillIcon } from '@primer/octicons-react';
@@ -26,8 +25,8 @@ export const Create = () => {
     const [captchaValue, setCaptchaValue] = useState(null);
     const [radioValue, setRadioValue] = useState('1');
     const { currentMeme, textOptions, widthCanvas, heightCanvas } = useSelector(state => state.main)
-    const { metaUrl, status, modalNft } = useSelector(state => state.nft)
-    const { userAdress, metaInstalled, networkId, nameBlockchain, chainId } = useSelector(state => state.login)
+    const { status, modalNft } = useSelector(state => state.nft)
+    const { userAdress, nameBlockchain, chainId } = useSelector(state => state.login)
 
     useEffect(() => {
         if (status === 'pending') {
@@ -125,20 +124,7 @@ export const Create = () => {
     }
 
     const createGo = () => {
-        if (nameBlockchain === 'ethereum') {
-            if (!metaInstalled) {
-                return
-            }
-            if (userAdress === null && metaInstalled) {
-                dispatch(getAdressMeta())
-                dispatch(getNetwork(window.ethereum.networkVersion))
-                return
-            }
-            if (networkId !== 100 && userAdress !== null) {
-                return
-            }
-            dispatch(createNft({ ad: userAdress, metaData: metaUrl.metaUrl }))
-        } else if (nameBlockchain === 'waves') {
+        if (nameBlockchain === 'waves') {
             if (radioValue === '1' && titleValid() && priceValid()) {
                 upload().then((data) => {
                     const item = {

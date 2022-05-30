@@ -16,16 +16,6 @@ import { Guide } from './pages/guide';
 
 function App() {
   const dispatch = useDispatch()
-  //const { metaInstalled, wavesState } = useSelector((state) => state.login)
-
-  // useEffect(() => {
-  //   if (metaInstalled) {
-  //     window.ethereum.on('chainChanged', chainId => {
-  //       dispatch(getNetwork(chainId))
-  //     })
-  //   }
-
-  // }, [dispatch, metaInstalled])
 
   useEffect(() => {
     window.onload = ()=>window.WavesKeeper && dispatch(getWavesState());
