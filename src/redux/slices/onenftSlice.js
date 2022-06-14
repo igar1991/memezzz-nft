@@ -28,6 +28,9 @@ export const onenftSlice = createSlice({
         error: null,
     },
     reducers: {
+        updateDataAfterBuy: (state, action)=> {
+            state.nftData = {...state.nftData, price: action.payload.price, owner: action.payload.owner };
+        }
     },
     extraReducers: {
         [getOneNft.pending]: (state) => {
@@ -43,5 +46,7 @@ export const onenftSlice = createSlice({
         }
     }
 })
+
+export const { updateDataAfterBuy } = onenftSlice.actions
 
 export default onenftSlice.reducer

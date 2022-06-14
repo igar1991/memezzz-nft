@@ -34,7 +34,7 @@ export const Meme = () => {
     }, [dispatch, statusBuying])
 
 
-    const Buyfunc = (id, id_asset, price, newprice, tradable) => {
+    const Buyfunc = (id_asset, price, newprice, tradable) => {
         if (newprice <= 0 && tradable === '1') {
             setPriceV(true)
             return
@@ -44,9 +44,9 @@ export const Meme = () => {
             return
         }
         if (!(tradable === '1')) {
-            dispatch(buyNftWaves({ id, id_asset, price, newprice: 0, tradable }))
+            dispatch(buyNftWaves({ id_asset, price, newprice: 0, tradable }))
         } else {
-            dispatch(buyNftWaves({ id, id_asset, price, newprice, tradable }))
+            dispatch(buyNftWaves({ id_asset, price, newprice, tradable }))
         }
     }
 
@@ -138,7 +138,7 @@ export const Meme = () => {
                                 {userAdress
                                     ?
                                     <button 
-                                        onClick={() => Buyfunc(nftData.id, nftData.id_asset, nftData.price, currentPrice, radioValue)} 
+                                        onClick={() => Buyfunc(nftData.id_asset, nftData.price, currentPrice, radioValue)} 
                                         className="btn btn-success" 
                                         type="button"
                                         disabled={userAdress === nftData.owner || statusBuying === 'pending'}
