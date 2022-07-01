@@ -24,6 +24,7 @@ export const Create = () => {
     const [captcha, setCaptcha] = useState(true);
     const [captchaValue, setCaptchaValue] = useState(null);
     const [radioValue, setRadioValue] = useState('1');
+    const [radioLang, setRadioLang] = useState('RU');
     const { currentMeme, textOptions, widthCanvas, heightCanvas } = useSelector(state => state.main)
     const { status, modalNft } = useSelector(state => state.nft)
     const { userAdress, nameBlockchain, chainId } = useSelector(state => state.login)
@@ -132,10 +133,11 @@ export const Create = () => {
                         owner: userAdress,
                         url: data.payload.imageUrl,
                         title: title,
-                        public: +radioValue,
+                        public: Number(radioValue),
                         status: 'moderation',
                         price: Number(currentPrice),
-                        capcha: captchaValue
+                        capcha: captchaValue,
+                        lang: radioLang
                     }
                     dispatch(sendNftWaves(item))
                 })
@@ -150,7 +152,8 @@ export const Create = () => {
                         public: Number(radioValue),
                         status: 'moderation',
                         price: 0,
-                        capcha: captchaValue
+                        capcha: captchaValue,
+                        lang: radioLang
                     }
                     dispatch(sendNftWaves(item))
                 })
@@ -215,6 +218,30 @@ export const Create = () => {
                                             Private
                                         </ToggleButton>
                                         </OverlayTrigger>
+                                </ButtonGroup>
+                                <ButtonGroup className="col-2 mt-1">
+                                        <ToggleButton
+                                            id='RU'
+                                            type="radio"
+                                            variant={radioLang === 'RU' ? 'warning' : 'outline-warning'}
+                                            name="lang"
+                                            value={'RU'}
+                                            checked={radioLang === 'RU'}
+                                            onChange={(e) => setRadioLang(e.currentTarget.value)}
+                                        >
+                                            RU
+                                        </ToggleButton>
+                                        <ToggleButton
+                                            id='EN'
+                                            type="radio"
+                                            variant={radioLang === 'EN' ? 'warning' : 'outline-warning'}
+                                            name="lang"
+                                            value={'EN'}
+                                            checked={radioLang === 'EN'}
+                                            onChange={(e) => setRadioLang(e.currentTarget.value)}
+                                        >
+                                            EN
+                                        </ToggleButton>
                                 </ButtonGroup>
                                 <div className='col-8'>
                                     <Form.Label>Title</Form.Label>

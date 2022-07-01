@@ -55,6 +55,7 @@ export const sendNftWaves = createAsyncThunk(
           "Content-Type": "application/x-www-form-urlencoded",
         },
       });
+      console.log(response)
     } catch (error) {
       return rejectWithValue(error);
     }
@@ -103,11 +104,6 @@ export const buyNftWaves = createAsyncThunk(
   ) {
     try {
       const trade = tradable === "1" ? true : false;
-      console.log(process.env.REACT_APP_WAVES_DAPP_ADRESS);
-      console.log(id_asset);
-      console.log(
-        (+price * process.env.REACT_APP_WAVES_COMMISSION * 100000000).toFixed(0)
-      );
       const data = {
         dApp: process.env.REACT_APP_WAVES_DAPP_ADRESS,
         fee: 500000,
@@ -134,7 +130,6 @@ export const buyNftWaves = createAsyncThunk(
       const [tx] = await signer.invoke(data).broadcast();
       const conf = await signer.waitTxConfirm(tx, 1);
       dispatch(updateDataAfterBuy({ price: +newprice, owner: conf.sender }));
-      console.log(conf.sender);
       return conf;
     } catch (error) {
       return rejectWithValue(error);
