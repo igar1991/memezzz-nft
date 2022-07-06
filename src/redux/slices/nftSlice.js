@@ -55,7 +55,6 @@ export const sendNftWaves = createAsyncThunk(
           "Content-Type": "application/x-www-form-urlencoded",
         },
       });
-      console.log(response)
     } catch (error) {
       return rejectWithValue(error);
     }
@@ -197,7 +196,6 @@ export const nftSlice = createSlice({
     },
     [sendNftWaves.fulfilled]: (state, action) => {
       state.status = "complit";
-      console.log(action.payload);
     },
     [sendNftWaves.rejected]: (state, action) => {
       state.status = "error";

@@ -4,16 +4,6 @@ import { ProviderKeeper } from '@waves/provider-keeper';
 
 const url = process.env.REACT_APP_API_LINK;
 
-const signer = new Signer({
-    NODE_URL: process.env.REACT_APP_WAVES_NODE_URL,
-});
-
-if(window.WavesKeeper) {
-    const keeper = new ProviderKeeper();
-    signer.setProvider(keeper)
-  
-}
-
 export const getAdressWaves = createAsyncThunk('waves/getAdress',
     async function (_, { rejectWithValue, dispatch }) {
         const authData = { data: "MemeZzz" }
@@ -62,6 +52,14 @@ export const getUserNftWaves = createAsyncThunk('waves/getUserNft',
 export const pickupNftWaves = createAsyncThunk('waves/pickupNft',
     async function ({ id, id_asset }, { rejectWithValue }) {
         try {
+            const signer = new Signer({
+                NODE_URL: process.env.REACT_APP_WAVES_NODE_URL,
+            });
+            
+            if(window.WavesKeeper) {
+                const keeper = new ProviderKeeper();
+                signer.setProvider(keeper)
+            }
             const data = {
                 dApp: process.env.REACT_APP_WAVES_DAPP_ADRESS,
                 fee: 500000,
@@ -94,6 +92,14 @@ export const pickupNftWaves = createAsyncThunk('waves/pickupNft',
 export const changeNftWaves = createAsyncThunk('waves/changeNft',
     async function ({ id, id_asset, isTradable, price }, { rejectWithValue }) {
         try {
+            const signer = new Signer({
+                NODE_URL: process.env.REACT_APP_WAVES_NODE_URL,
+            });
+            
+            if(window.WavesKeeper) {
+                const keeper = new ProviderKeeper();
+                signer.setProvider(keeper)
+            }
             const data = {
                 dApp: process.env.REACT_APP_WAVES_DAPP_ADRESS,
                 fee: 500000,
@@ -103,7 +109,7 @@ export const changeNftWaves = createAsyncThunk('waves/changeNft',
                     args: [
                         { type: 'string', value: id_asset },
                         { type: 'boolean', value: isTradable },
-                        { type: 'integer', value: (+price*100000000).toFixed(0) },
+                        { type: 'integer', value: Number((+price*100000000).toFixed(0)) },
 
                     ],
                 },
